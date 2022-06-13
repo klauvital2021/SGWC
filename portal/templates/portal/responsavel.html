@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "card">
+<div class="card-body">
+ <h4> Lista dos Responsáveis </h4>
+ <hr>
+    <div>
+       <br/> Olá  <B> {{ nomeFamilia }} </B>
+
+    </div>
+    <div><h2><b>{{ frase }}</b></h2></div>
+    <a class ="btn btn-success" href="{% url 'responsavel_add' %}">Inserir</a>
+    <table class = "table table-striped">
+      <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Data nascimento</th>
+            <th>Cidade</th>
+            <th>UF</th>
+            <th>Celular - WhatsApp</th>
+            <th>Estatus</th>
+            <th>Parentesco</th>
+            <th>E-mail</th>
+            <th>Senha</th>
+            <th>Acões</th>
+        </tr>
+      </thead>
+      <tbody>
+         {%  for responsavel in responsaveis %}
+
+         <tr>
+             <td>{{ responsavel.id }} </td>
+             <td>{{ responsavel.nome  }} </td>
+             <td>{{ responsavel.dtanasc }}</td>
+             <td>{{ responsavel.cidade }} </td>
+             <td>{{ responsavel.uf }} </td>
+             <td>{{ responsavel.celular_whatsapp }} </td>
+             <td>{{ responsavel.status }} </td>
+             <td>{{ responsavel.parentesco }} </td>
+             <td>{{ responsavel.email }} </td>
+             <td>{{ responsavel.senha }} </td>
+
+             <td>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'editar' responsavel.id %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url ''  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+             </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+  </table>
+
+</div>
+</div>
+{% endblock %}

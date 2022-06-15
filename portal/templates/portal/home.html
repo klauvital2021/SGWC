@@ -1,35 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+
+{% block title %} Sistema de Gerenciamento WEB para Cuidadores {% endblock %}
 
 {% block content %}
-<div class = "card">
-<div class="card-body">
- <h3> SGWC - Sistema de Gerenciamento WEB para Cuidadores </h3>
- <hr>
- <h6> Faça seu login ou Cadastre-se no sistema </h6>
-    <tbody>
-             <table class = "table table-striped">
-                <form action="{% url 'login' %}" method="GET">
-                    <tr>
-                        <td><label for="email">Email:</label></td>
-                        <td><input type="email" id="email" name="email" size="20" /> </td>
-                    </tr>
-                    <tr>
-                        <td><label for="senha">Senha:</label></td>
-                        <td> <input type="password" id="senha" name="senha" size="15"/> </td>
-                    </tr>
-                </form>
-                    <tr>
-                         <td colspan="2"><button class='btn btn-success'>OK</button>
+    <div class="container-fluid">
+         <div class="card-body">
+             <h4>Olá! <B> {{ user.username }}</B></h4>
 
-                         <a class="btn btn-success" href="{% url 'familia_add' %}"> Inserir </a>
-                         </td>
-
-                    </tr>
-
-             </table>
-    </tbody>
+            <img class="img-home" src="{% static 'media/populacao_total.jpg' %}" width = "500" >
 
 
-</div>
-</div>
+
+         </div>
+    </div>
+
 {% endblock %}

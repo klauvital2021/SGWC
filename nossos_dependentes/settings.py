@@ -38,9 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_extensions',
     'bootstrapform',
     'django_filters',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'crispy_forms',
+    'stdimage',
 ]
 
 MIDDLEWARE = [
@@ -122,10 +128,36 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
-STATICFILES_DIRS = (os.path.join('static'), )
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# django-allauth
+
+AUTHENTICATION_BACKENDS = [
+	'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+ACCOUNT_SESSION_REMEMBER = True
+# Só precisa digitar a senha uma vez
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+# Não precisa de username
+ACCOUNT_USERNAME_REQUIRED = False
+# Método de autenticação: email
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+# Email obrigatório
+ACCOUNT_EMAIL_REQUIRED = True
+# Email único
+ACCOUNT_UNIQUE_EMAIL = True

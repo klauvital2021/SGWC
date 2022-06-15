@@ -1,4 +1,6 @@
 from django.db import models
+from stdimage import StdImageField, JPEGField
+
 from django.urls import reverse
 
 # ---------- Modelo Multi Tabelas ----------

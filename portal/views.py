@@ -1,13 +1,16 @@
+from django.views.generic import TemplateView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 
 from portal.forms import ResponsavelForm, CuidadorForm, DependenteForm, FamiliaForm
 from portal.models import Responsavel, Cuidador, Dependente, Familia
 
+class HomePageView(TemplateView):
+    template_name = "portal/home.html"
 
-def home(request):
-  return render(request, 'portal/home.html')
-
+#def home(request):
+#    return render(request, 'portal/home.html')
+'''
 def login(request):
     if request.method == "GET":
         email = request.GET('email')
@@ -39,7 +42,7 @@ def login(request):
                  }
 
                 return render(request, 'portal/home.html', context=context)
-
+'''
 def lista_responsavel(request):
     responsaveis = Responsavel.objects.all()
 

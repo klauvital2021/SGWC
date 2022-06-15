@@ -8,7 +8,7 @@
     text-align: center;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
-    background-color: rgb(37, 37, 39);
+    background-color: rgb(52, 58, 64);
 }
 
 #menu-h ul {
@@ -31,4 +31,10 @@
 #menu-h ul li a:hover {
     background-color: rgb(24, 139, 233);
 }
-
+#img-home {
+    display: block;
+    margin: 0 auto;
+}
+#usuario{
+    font-color: red;
+}

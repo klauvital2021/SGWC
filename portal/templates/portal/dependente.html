@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+{% load bootstrap %}
 
 {% block content %}
 <div class = "card">
 <div class="card-body">
- <h2> Olá! <B>{{ user.username }}</B></h2>
- <h4> Lista dos Dependentes </h4>
+    <h4> Olá! <B><label id="usuario">{{ user.username }}</label></B></h4>
+
+ <h2> Lista dos Dependentes </h2>
  <hr>
  <a class ="btn btn-success" href="{% url 'dependente_add' %}">Inserir</a>
     <table class = "table table-striped">
       <thead>
+
         <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -42,8 +45,8 @@
              <td>{{ dependente.contato_endereco_convenio }} </td>
 
              <td>
-                 <a class ="btn btn-warning btn-sm" href="{% url ''  %}">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="{% url ''  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'dependentes'  %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url 'dependentes'  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
              </td>
          </tr>
          {% endfor %}

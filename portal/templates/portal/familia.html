@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block content %}
+<div class = "card">
+<div class="card-body">
+    <h4> Olá! <B><label id="usuario">{{ user.username }}</label></B></h4>
+
+ <h2> Família logada </h2>
+ <hr>
+ <a class ="btn btn-success" href="{% url 'familia_add' %}">Inserir</a>
+    <table class = "table table-striped">
+      <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Endereço</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>UF</th>
+            <th>Email</th>
+            <th>Senha</th>
+            <th>Acões</th>
+        </tr>
+      </thead>
+      <tbody>
+         {%  for familia in familia %}
+
+         <tr>
+             <td>{{ familia.id}} </td>
+             <td>{{ familia.nome  }} </td>
+             <td>{{ familia.status }}</td>
+             <td>{{ familia.endereco }}</td>
+             <td>{{ familia.bairro }}</td>
+             <td>{{ familia.cidade }} </td>
+             <td>{{ familia.uf }} </td>
+             <td>{{ familia.email}} </td>
+             <td>{{ familia.senha}} </td>
+             <td>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'familia'  %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url 'familia'  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+             </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+  </table>
+
+</div>
+</div>
+{% endblock %}

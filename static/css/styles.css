@@ -34,7 +34,33 @@
 #img-home {
     display: block;
     margin: 0 auto;
+    align-items: center;
 }
 #usuario{
-    font-color: red;
+    color: #2630FA;
 }
+#sair{
+    color: #FFFFF;
+
+}
+.breadcrumb {
+  display: inline-block;
+  position:relative;
+  line-height:30px;                /* altura final da linha */
+  text-align:center;
+  padding-right:15px;
+  padding-left:35px;               /* 1/2 da altura da linha a mais */
+                                   /* que o right para compensar o bico */
+  color:#000;
+}
+.breadcrumb:after {
+  content:"";display:block;position:absolute;
+  box-sizing: content-box;           /* para respeitar medida interna */
+  top:0;bottom:0;left:100%;
+  border:solid 15px transparent;   /* metade da altura da linha */
+  z-index:1;
+}
+.blue {background:blue}  .blue:after {border-left-color:blue}
+.gold {background:gold}  .gold:after {border-left-color:gold}
+.green{background:green} .green:after{border-left-color:green}
+.red  {background:red}   .red:after  {border-left-color:red}

@@ -147,14 +147,20 @@ AUTHENTICATION_BACKENDS = [
 	'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
 SITE_ID = 1
+
 LOGIN_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 ACCOUNT_SESSION_REMEMBER = True
 # Só precisa digitar a senha uma vez
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-# Não precisa de username
-ACCOUNT_USERNAME_REQUIRED = False
+# Não precisa de username = false
+ACCOUNT_USERNAME_REQUIRED = True
 # Método de autenticação: email
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 # Email obrigatório

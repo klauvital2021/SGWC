@@ -61,11 +61,11 @@ class Usuario(models.Model):
     celular_whatsapp = models.CharField(max_length=25, unique=True, blank=False, null=False, verbose_name='Celular - WhatsApp')
     celular_recado = models.CharField(max_length=25, blank=True, null=True, verbose_name='Contato Recado')
     estado_civil = models.CharField(max_length=1, choices=civil_choices, verbose_name='Estado Civil')
-    nome_conjuge = models.CharField(max_length=100, blank=False, null=False, verbose_name='Cônjuge')
+    nome_conjuge = models.CharField(max_length=100, blank=True, null=True, verbose_name='Cônjuge')
     naturalidade = models.CharField(max_length=20, blank=True, null=True, verbose_name='Naturalidade')
     nacionalidade = models.CharField(max_length=20, blank=False, null=False, verbose_name='Nacionalidade')
     status = models.CharField(max_length=1, choices=status_choices, verbose_name='Estatus')
-    tipo_usuario = models.CharField(max_length=1, choices=tipo_usuario_choices, verbose_name='Usuário')
+    tipo_usuario = models.CharField(max_length=1, choices=tipo_usuario_choices, verbose_name='Tipo de Usuário')
 
 
     def __str__(self):
@@ -86,10 +86,12 @@ class Familia(models.Model):
 
 class Responsavel(Usuario):
     familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True)
-    parentesco_choices = models.CharField(max_length=1, choices=parentesco_choices, verbose_name='Tipo de Responsável')
+    parentesco = models.CharField(max_length=1, choices=parentesco_choices, verbose_name='Tipo de Responsável')
+    email = models.EmailField(max_length=30, unique=True, blank=True, null=True, verbose_name='E-mail')
+    senha = models.CharField(max_length=20, blank=False, null=False)
 
     def __str__(self):
-        return self.nome
+        return "{} - {} - {} - {} ".format(self.nome, self.familia.nome, self.parentesco, self.estado_civil)
 
 
 class Cuidador(Usuario):
@@ -104,7 +106,8 @@ class Cuidador(Usuario):
     dia_pagamento = models.DateField(db_column='dia_pagamento', blank=True, null=True, verbose_name='Dia de pagamento')
     observacao = models.TextField(max_length=1000, blank=False, null=False, verbose_name='Senha')
     familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True)
-
+    email = models.EmailField(max_length=30, unique=True, blank=True, null=True, verbose_name='E-mail')
+    senha = models.CharField(max_length=20, blank=False, null=False)
 
     def __str__(self):
         return self.nome
@@ -115,8 +118,13 @@ class Dependente(Usuario):
     contato_endereco_convenio = models.CharField(max_length=100, blank=False, null=False, verbose_name='Endereço Convênio')
     familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True)
 
+
+
     def __str__(self):
-        return self.nome
+        return "{} - {} - {} ".format(self.nome, self.familia.nome, self.estado_civil)
+
+
+
 
 
 

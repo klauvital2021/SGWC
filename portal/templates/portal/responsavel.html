@@ -3,13 +3,10 @@
 {% block content %}
 <div class = "card">
 <div class="card-body">
- <h4> Lista dos Responsáveis </h4>
- <hr>
-    <div>
-       <br/> Olá  <B> {{ nomeFamilia }} </B>
+    <h4> Olá! <B><label id="usuario">{{ user.username }}</label></B></h4>
 
-    </div>
-    <div><h2><b>{{ frase }}</b></h2></div>
+ <h2> Lista dos Responsáveis </h2>
+ <hr>
     <a class ="btn btn-success" href="{% url 'responsavel_add' %}">Inserir</a>
     <table class = "table table-striped">
       <thead>
@@ -23,7 +20,6 @@
             <th>Estatus</th>
             <th>Parentesco</th>
             <th>E-mail</th>
-            <th>Senha</th>
             <th>Acões</th>
         </tr>
       </thead>
@@ -40,11 +36,11 @@
              <td>{{ responsavel.status }} </td>
              <td>{{ responsavel.parentesco }} </td>
              <td>{{ responsavel.email }} </td>
-             <td>{{ responsavel.senha }} </td>
+             <td>{{ responsavel.familia.nome }} </td>
 
              <td>
-                 <a class ="btn btn-warning btn-sm" href="{% url 'editar' responsavel.id %}">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="{% url ''  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
              </td>
          </tr>
          {% endfor %}

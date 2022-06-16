@@ -65,17 +65,25 @@ def lista_cuidador(request):
     }
     return render(request, 'portal/cuidador.html', context)
 
+def lista_familia(request):
+    familia = Familia.objects.all()
+    context = {
+        'familia': familia
+    }
+    return render(request, 'portal/familia.html', context)
+
+
 def familia_add(request):
     form = FamiliaForm(request.POST or None)
     if request.POST:
         if form.is_valid():
             form.save()
-            return redirect('lista_responsavel')
+            return redirect('familia')
 
     context = {
         'form': form,
     }
-    return render(request, 'portal/lista_responsavel.html', context)
+    return render(request, 'portal/familia_add.html', context)
 
 
 def responsavel_add(request):

@@ -1,5 +1,5 @@
 from django import forms
-from portal.models import Responsavel, Dependente, Cuidador,Familia
+from portal.models import Responsavel, Dependente, Cuidador,Familia, Usuario
 
 
 status_choices = (
@@ -21,16 +21,32 @@ class ResponsavelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+        self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
+
+
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = '__all__'
+
 
 class DependenteForm(forms.ModelForm):
     class Meta:
         model = Dependente
         fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
+
 
 class CuidadorForm(forms.ModelForm):
     class Meta:
         model = Cuidador
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})

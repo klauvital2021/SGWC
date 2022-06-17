@@ -1,10 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Cuidadores {% endblock %}
+{% block content %}
+<div class = "card">
+<div class="card-body">
+    <h4> Olá! <B><label id="usuario">{{ user.username }}</label></B></h4>
+
+ <h2> Lista dos Cuidadores </h2>
+ <hr>
+ <a class ="btn btn-success" href="{% url 'cuidador_add' %}">Inserir</a>
+    <table class = "table table-striped">
+      <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Data nascimento</th>
+            <th>Endereço</th>
+            <th>Cidade</th>
+            <th>UF</th>
+            <th>Celular - WhatsApp</th>
+            <th>Estatus</th>
+            <th>Data de Início</th>
+            <th>Data de Fim</th>
+            <th>Regime de Contratação</th>
+            <th>Carga horaria semanal</th>
+            <th>Turno de trabalho</th>
+            <th>Salario atual mensal</th>
+            <th>Adicional</th>
+            <th>Dia de pagamento</th>
+            <th>Acões</th>
+        </tr>
+      </thead>
+      <tbody>
+         {%  for cuidador in cuidadores %}
+
+         <tr>
+             <td>{{ cuidador.id }} </td>
+             <td>{{ cuidador.nome  }} </td>
+             <td>{{ cuidador.dtanasc }}</td>
+             <td>{{ cuidador.endereco}}</td>
+             <td>{{ cuidador.cidade }} </td>
+             <td>{{ cuidador.uf }} </td>
+             <td>{{ cuidador.celular_whatsapp }} </td>
+             <td>{{ cuidador.status }} </td>
+             <td>{{ cuidador.data_inicio }} </td>
+             <td>{{ cuidador.data_fim }} </td>
+             <td>{{ cuidador.regime_contratacao }} </td>
+             <td>{{ cuidador.carga_horaria_semanal }} </td>
+             <td>{{ cuidador.turno_trabalho }} </td>
+             <td>{{ cuidador.salario_atual }} </td>
+             <td>{{ cuidador.adicional }} </td>
+             <td>{{ cuidador.dia_pagamento }} </td>
+
+             <td>
+                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+             </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+  </table>
+
+</div>
+</div>
+{% endblock %}

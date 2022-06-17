@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+ <div class="card">
+    <div class="card-body">
+        <h4>Inserir Cuidador</h4>
+        <hr>
+        <form action="{% url 'cuidador_add' %}" method="post">
+             {% csrf_token %}
+             {{  form|bootstrap }}
+
+             <button class ="btn btn-success" type="submit">Salvar</button>
+             <button class ="btn btn-warning" onclick="window.location.href='{% url 'cuidadores' %}'">Cancelar</button>
+        </form>
+    </div>
+
+ </div>
+
+{% endblock %}
 </html>

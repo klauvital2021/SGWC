@@ -5,6 +5,7 @@ from django.db.models import Q
 from portal.forms import ResponsavelForm, CuidadorForm, DependenteForm, FamiliaForm
 from portal.models import Responsavel, Cuidador, Dependente, Familia
 
+
 class HomePageView(TemplateView):
     template_name = "portal/home.html"
 
@@ -44,11 +45,13 @@ def login(request):
                 return render(request, 'portal/home.html', context=context)
 '''
 def lista_responsavel(request):
+
     responsaveis = Responsavel.objects.all()
 
     context = {
         'responsaveis': responsaveis
     }
+
     return render(request, 'portal/responsavel.html', context)
 
 def lista_dependente(request):
@@ -59,7 +62,7 @@ def lista_dependente(request):
     return render(request, 'portal/dependente.html', context)
 
 def lista_cuidador(request):
-    cuidadores = Responsavel.objects.all()
+    cuidadores = Cuidador.objects.all()
     context = {
         'cuidadores': cuidadores
     }
@@ -111,7 +114,7 @@ def dependente_add(request):
     return render(request, 'portal/dependente_add.html', context)
 
 def cuidador_add(request):
-    form = DependenteForm(request.POST or None)
+    form = CuidadorForm(request.POST or None)
     if request.POST:
         if form.is_valid():
             form.save()

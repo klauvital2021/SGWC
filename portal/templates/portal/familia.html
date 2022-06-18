@@ -4,9 +4,10 @@
 {% block content %}
 <div class = "card">
 <div class="card-body">
-    <h4> Olá! <B><label id="usuario">{{ user.username }}</label></B></h4>
+    <h3> Família Logada </h3>
+    <h2> Olá Família <B><label id="familia">{{ familia.nome }}</label></B></h2>
 
- <h2> Família  </h2>
+
  <hr>
  <a class ="btn btn-success" href="{% url 'familia_add' %}">Inserir</a>
     <table class = "table table-striped">
@@ -21,7 +22,6 @@
             <th>Cidade</th>
             <th>UF</th>
             <th>Email</th>
-            <th>Senha</th>
             <th>Acões</th>
         </tr>
       </thead>
@@ -37,7 +37,7 @@
              <td>{{ familia.cidade }} </td>
              <td>{{ familia.uf }} </td>
              <td>{{ familia.email}} </td>
-             <td>{{ familia.senha}} </td>
+
              <td>
                  <a class ="btn btn-warning btn-sm" href="{% url 'familia'  %}">Editar</a>
                  <a class ="btn btn-danger btn-sm" href="{% url 'familia'  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>

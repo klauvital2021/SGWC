@@ -4,11 +4,11 @@
 
 }
 #menu-h{
-    margin: 0 auto;
+    margin-top: 0;
     text-align: center;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
-    background-color: rgb(52, 58, 64);
+    background-color: rgb(120, 121, 122);
 }
 
 #menu-h ul {
@@ -22,7 +22,7 @@
 
 #menu-h ul li a {
     color: #FFF;
-    padding: 20px;
+    padding: 10px;
     display: inline-block;
     text-decoration: none;
     transition: background .4s;
@@ -36,7 +36,7 @@
     margin: 0 auto;
     align-items: center;
 }
-#usuario{
+#familia{
     color: #2630FA;
 }
 #sair{
@@ -64,3 +64,27 @@
 .gold {background:gold}  .gold:after {border-left-color:gold}
 .green{background:green} .green:after{border-left-color:green}
 .red  {background:red}   .red:after  {border-left-color:red}
+
+ #menu {
+		width: 30%;
+		margin: 0; padding: 0;
+		float: left;
+		}
+ #menu ul li {
+		margin: 0; padding: 0px;
+		border-bottom: 1px solid #CCC;
+		text-align: left;
+		list-style-type: none;
+		}
+ #menu a:link {
+		background: #F5F5F5;
+		color: #666;
+		font-weight: bold;
+		text-decoration: none;
+		padding: 8px;
+		display: block;
+		}
+ #menu a:hover {
+		background: #E5F0FF;
+		color: #039;
+		}

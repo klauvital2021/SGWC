@@ -13,31 +13,35 @@
 </head>
 <body>
 <header>
-        <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
+        <nav class="navbar navbar-expand navbar-dark bg-dark mb-0">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home' %}">Sistema de Gerenciamento WEB para Cuidadores</a>
-                <nav id="menu-h">
-                    <ul class="table table-responsive">
-                        <li><a href="{% url 'familia' %}">Família</a></li>
-                        <li><a href="{% url 'dependentes' %}">Dependentes</a></li>
-                        <li><a href="{% url 'responsaveis' %}"> Responsáveis</a></li>
-                        <li><a href="{% url 'cuidadores' %}">Cuidadores</a></li>
-                    </ul>
-                </nav>
                  <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="breadcrumb red" id="sair" href="{% url 'account_logout' %}">Sair</a>
-                    </li>
+                    {% if familia != null %}
+                         <nav id="menu-h">
+                            <ul class="table table-responsive">
+                                <li><a href="{% url 'familia' %}">Família</a></li>
+                                <li><a href="{% url 'dependentes' %}">Dependentes</a></li>
+                                <li><a href="{% url 'responsaveis' %}"> Responsáveis</a></li>
+                                <li><a href="{% url 'cuidadores' %}">Cuidadores</a></li>
+                            </ul>
+                         </nav>
                     {% else %}
                     <li class="nav-item">
-                        <a class="breadcrumb blue"  href="{% url 'account_login' %}">  Entrar  </a>
+                       <!-- <a class="breadcrumb blue"  href="{% url 'account_login' %}">  Entrar  </a> -->
+                        <a class="breadcrumb blue"  href="{% url 'login_familia' %}">  Entrar </a>
                     </li>
                     <li class="nav-item">
-                        <a class="breadcrumb gold" href="{% url 'account_signup' %}"> Cadastro </a>
+                     <!--   <a class="breadcrumb gold" href="{% url 'account_signup' %}"> Cadastro </a>-->
+                            <a class="breadcrumb gold" href="{% url 'familia_add' %}"> Cadastro </a>
+                    </li>
+                    <li class="nav-item">
+                       <!--  <a class="breadcrumb red" id="sair" href="{% url 'account_logout' %}">Sair</a> -->
+                        <a class="breadcrumb red" href="{% url 'sair' %}">Sair</a>
                     </li>
                     {% endif %}
                 </ul>
+
             </div>
         </nav>
 

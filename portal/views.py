@@ -1,6 +1,9 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Q
+from django.shortcuts import redirect
+from django.http import HttpResponse
+
+from hashlib import sha256
 
 from portal.forms import ResponsavelForm, CuidadorForm, DependenteForm, FamiliaForm
 from portal.models import Responsavel, Cuidador, Dependente, Familia
@@ -9,41 +12,42 @@ from portal.models import Responsavel, Cuidador, Dependente, Familia
 class HomePageView(TemplateView):
     template_name = "portal/home.html"
 
-#def home(request):
-#    return render(request, 'portal/home.html')
-'''
-def login(request):
-    if request.method == "GET":
-        email = request.GET('email')
-        senha = request.GET('senha')
 
-        busca = Q(
-            Q(email=email)
-            & Q(senha=senha)
-        )
-        Listfamilia = Familia.objects.filter(busca)
-        if Listfamilia.count() != 0:
-                acesso = True
-                nomeFamilia = Familia.nome
-                frase = "Bem vindo ao sistema SGWC"
+def login_familia(request):
+     status = request.GET.get('status')
+     return render(request, 'portal/login_familia.html', {'status': status})
 
-                context = {
-                    'familia': nomeFamilia,
-                    'frase': frase,
-                }
-                return render(request, 'portal/responsavel.html', context=context)
+def validar_login(request):
+    email = request.POST.get('email')
+    senha = request.POST.get('senha')
 
-        else:
-                frase = "Não existe 'FAMÍLIA' cadastrada com os dados acima"
-                acesso = False
+    #senha = sha256(senha.encode()).hexdigest()
 
-                context = {
-                'frase': frase,
-                'acesso': acesso,
-                 }
+    familia = Familia.objects.all()
+    familia_logada = Familia.objects.filter(email=email).filter(senha=senha)
 
-                return render(request, 'portal/home.html', context=context)
-'''
+    if len(familia_logada) == 0:
+          return redirect('/login/familia/?status=1')
+
+    elif len(familia_logada) > 0:
+          request.session['logado'] = True
+          context = {
+              'familia': familia_logada
+          }
+          return render(request, 'portal/home.html', context)
+
+def home(request):
+    if request.session['logado']:
+        return render(request, 'portal/home.html')
+    else:
+        return render(request, 'portal/login_familia.html')
+
+
+def sair_familia(request):
+    request.session['logado'] = None
+    return render(request, 'portal/sair.html')
+
+
 def lista_responsavel(request):
 
     responsaveis = Responsavel.objects.all()
@@ -77,6 +81,7 @@ def lista_familia(request):
 
 
 def familia_add(request):
+
     form = FamiliaForm(request.POST or None)
     if request.POST:
         if form.is_valid():
@@ -85,6 +90,7 @@ def familia_add(request):
 
     context = {
         'form': form,
+
     }
     return render(request, 'portal/familia_add.html', context)
 

@@ -4,10 +4,8 @@
 {% block content %}
 <div class = "card">
 <div class="card-body">
-    <h3> Lista dos Cuidadores </h3>
-    <h4> Olá Família <B><label>{{ familia.0 }}</label></B></h4>
-
-
+    <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
+    <h5> Lista Cuidadores </h5>
  <hr>
  <a class ="btn btn-success" href="{% url 'cuidador_add' %}">Inserir</a>
     <table class = "table table-striped">
@@ -16,18 +14,18 @@
         <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Data nascimento</th>
+            <th>Dta nasc</th>
             <th>Endereço</th>
             <th>Cidade</th>
             <th>UF</th>
-            <th>Celular - WhatsApp</th>
+            <th>Cel/Whats</th>
             <th>Estatus</th>
-            <th>Data de Início</th>
-            <th>Data de Fim</th>
-            <th>Regime de Contratação</th>
-            <th>Carga horaria semanal</th>
-            <th>Turno de trabalho</th>
-            <th>Salario atual mensal</th>
+            <th>Admissão</th>
+            <th>Demissao</th>
+            <th>Contratação</th>
+            <th>CH Semanal</th>
+            <th>Turno</th>
+            <th>Salario</th>
             <th>Adicional</th>
             <th>Dia de pagamento</th>
             <th>Acões</th>

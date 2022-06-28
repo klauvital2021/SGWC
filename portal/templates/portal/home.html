@@ -3,18 +3,18 @@
 {% load bootstrap %}
 
 
-{% block titulo %} Sistema de Gerenciamento WEB para Cuidadores {% endblock %}
+{% block titulo %} Home {% endblock %}
 
 {% block content %}
-    <div class="container">
-         <div class="card-body">
-             <h4> Olá! Família <B><label>{{ familia.0 }}</label></B></h4>
+   <div class="container">
+
+             <h5> {{ familia }} Seja bem vindo !  </h5>
 
             <img id="img-home" src="{% static 'media/populacao_total.jpg' %}" width = "500" >
 
 
 
-         </div>
+
     </div>
 
 {% endblock %}

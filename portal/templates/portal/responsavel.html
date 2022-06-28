@@ -2,52 +2,52 @@
 {% block titulo %} Responsáveis {% endblock %}
 {% block content %}
 <div class = "card">
-<div class="card-body">
-    <h3> Lista dos Responsáveis </h3>
-    <h4> Olá Família <B><label>{{ familia.0 }}</label></B></h4>
+    <div class="card-body">
+        <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+        <h5> Lista Responsáveis </h5>
 
+        <hr>
+        <a class ="btn btn-success" href="{% url 'responsavel_add' %} ">Inserir</a>
+        <form action="{% url 'responsaveis' %}" method="post">
+            <table class = "table table-striped">
+                  <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data nascimento</th>
+                        <th>Cidade</th>
+                        <th>UF</th>
+                        <th>Celular - WhatsApp</th>
+                        <th>Estatus</th>
+                        <th>Parentesco</th>
+                        <th>E-mail</th>
+                        <th>Acões</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     {%  for responsavel in responsavel %}
+                     {% csrf_token %}
+                     <tr>
+                         <td>{{ responsavel.id }} </td>
+                         <td>{{ responsavel.nome  }} </td>
+                         <td>{{ responsavel.dtanasc }}</td>
+                         <td>{{ responsavel.cidade }} </td>
+                         <td>{{ responsavel.uf }} </td>
+                         <td>{{ responsavel.celular_whatsapp }} </td>
+                         <td>{{ responsavel.status }} </td>
+                         <td>{{ responsavel.parentesco }} </td>
+                         <td>{{ responsavel.email }} </td>
+                         <td>
+                             <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' responsavel.id %}">Editar</a>
+                             <a class ="btn btn-danger btn-sm" href="{% url 'responsavel_delete' responsavel.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                         </td>
+                         </td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+            </table>
+        </form>
 
- <hr>
-    <a class ="btn btn-success" href="{% url 'responsavel_add' %}">Inserir</a>
-    <table class = "table table-striped">
-      <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Data nascimento</th>
-            <th>Cidade</th>
-            <th>UF</th>
-            <th>Celular - WhatsApp</th>
-            <th>Estatus</th>
-            <th>Parentesco</th>
-            <th>E-mail</th>
-            <th>Acões</th>
-        </tr>
-      </thead>
-      <tbody>
-         {%  for responsavel in responsaveis %}
-
-         <tr>
-             <td>{{ responsavel.id }} </td>
-             <td>{{ responsavel.nome  }} </td>
-             <td>{{ responsavel.dtanasc }}</td>
-             <td>{{ responsavel.cidade }} </td>
-             <td>{{ responsavel.uf }} </td>
-             <td>{{ responsavel.celular_whatsapp }} </td>
-             <td>{{ responsavel.status }} </td>
-             <td>{{ responsavel.parentesco }} </td>
-             <td>{{ responsavel.email }} </td>
-             <td>{{ responsavel.familia.nome }} </td>
-
-             <td>
-                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
-             </td>
-         </tr>
-         {% endfor %}
-      </tbody>
-  </table>
-
-</div>
+    </div>
 </div>
 {% endblock %}

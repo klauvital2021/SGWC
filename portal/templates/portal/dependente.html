@@ -5,9 +5,8 @@
 {% block content %}
 <div class = "card">
 <div class="card-body">
-    <h3> Lista dos Dependentes </h3>
-    <h4> Olá Família <B><label>{{ familia.0 }}</label></B></h4>
-
+    <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
+    <h5> Lista Dependentes </h5>
 
  <hr>
  <a class ="btn btn-success" href="{% url 'dependente_add' %}">Inserir</a>
@@ -47,8 +46,9 @@
              <td>{{ dependente.contato_endereco_convenio }} </td>
 
              <td>
-                 <a class ="btn btn-warning btn-sm" href="{% url 'dependentes'  %}">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="{% url 'dependentes'  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'dependente_edit' dependente.id %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url 'dependente_delete' dependente.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ dependente.id }} ?  ')">Excluir</a>
+             </td>
              </td>
          </tr>
          {% endfor %}

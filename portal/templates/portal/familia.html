@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
-{% block titulo %} Familia {% endblock %}
+{% block titulo %} Familia cadastrada {% endblock %}
 {% block content %}
+
 <div class = "card">
 <div class="card-body">
-    <h3> Família Logada </h3>
-    <h2> Olá Família <B><label id="familia">{{ familia.nome }}</label></B></h2>
+       <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
+       <h5> Lista Familias </h5>
 
-
- <hr>
- <a class ="btn btn-success" href="{% url 'familia_add' %}">Inserir</a>
     <table class = "table table-striped">
+
       <thead>
 
         <tr>
@@ -28,6 +27,7 @@
       <tbody>
          {%  for familia in familia %}
 
+         {% csrf_token %}
          <tr>
              <td>{{ familia.id}} </td>
              <td>{{ familia.nome  }} </td>
@@ -39,8 +39,8 @@
              <td>{{ familia.email}} </td>
 
              <td>
-                 <a class ="btn btn-warning btn-sm" href="{% url 'familia'  %}">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="{% url 'familia'  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' familia.id %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url 'familia_delete' familia.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ familia.id }} ?  ')">Excluir</a>
              </td>
          </tr>
          {% endfor %}

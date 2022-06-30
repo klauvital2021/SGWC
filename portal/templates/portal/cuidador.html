@@ -15,19 +15,17 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Dta nasc</th>
-            <th>Endereço</th>
             <th>Cidade</th>
-            <th>UF</th>
             <th>Cel/Whats</th>
             <th>Estatus</th>
             <th>Admissão</th>
             <th>Demissao</th>
             <th>Contratação</th>
-            <th>CH Semanal</th>
+            <th>CHoraria</th>
             <th>Turno</th>
             <th>Salario</th>
             <th>Adicional</th>
-            <th>Dia de pagamento</th>
+            <th>Dia de pag</th>
             <th>Acões</th>
         </tr>
       </thead>
@@ -38,9 +36,7 @@
              <td>{{ cuidador.id }} </td>
              <td>{{ cuidador.nome  }} </td>
              <td>{{ cuidador.dtanasc }}</td>
-             <td>{{ cuidador.endereco}}</td>
              <td>{{ cuidador.cidade }} </td>
-             <td>{{ cuidador.uf }} </td>
              <td>{{ cuidador.celular_whatsapp }} </td>
              <td>{{ cuidador.status }} </td>
              <td>{{ cuidador.data_inicio }} </td>
@@ -53,8 +49,8 @@
              <td>{{ cuidador.dia_pagamento }} </td>
 
              <td>
-                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'cuidador_edit' cuidador.id %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url 'cuidador_delete' cuidador.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ cuidador.id }} ?  ')">Excluir</a>
              </td>
          </tr>
          {% endfor %}

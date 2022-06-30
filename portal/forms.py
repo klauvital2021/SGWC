@@ -4,6 +4,7 @@ from django.forms import PasswordInput
 from portal.models import Responsavel, Dependente, Cuidador,Familia
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.sessions.middleware import SessionMiddleware
 
 
 civil_choices = (
@@ -16,65 +17,61 @@ civil_choices = (
     )
 
 regime_choices = (
-    ('1', 'CLT'),
-    ('2', 'PJ'),
-    ('3', 'Free Lance'),
-    ('4', 'Prestação Serviços'),
+    ('CLT', 'CLT'),
+    ('PJ', 'PJ'),
+    ('FREE', 'Free Lance'),
+    ('PS', 'Prestação Serviços'),
     )
 
 turno_choices = (
-    ('1', 'Diurno'),
-    ('2', 'Noturno'),
+    ('D', 'Diurno'),
+    ('N', 'Noturno'),
     )
 
 parentesco_choices = (
-    ('1', 'Filho'),
-    ('2', 'Neto'),
-    ('3', 'Irmão'),
-    ('4', 'Outro'),
+    ('F', 'Filho'),
+    ('N', 'Neto'),
+    ('I', 'Irmão'),
+    ('O', 'Outro'),
 
 )
-
-tipo_usuario_choices = (
-    ('1', 'Administrador'),
-    ('2', 'Responsável'),
-    ('3', 'Cuidador'),
-    ('4', 'Dependente'),
-    ('5', 'Técnico em Enfermagem')
-
-    )
 
 
 class FamiliaForm(forms.ModelForm):
     class Meta:
         model = Familia
         fields = [
-            'username',
             'nome',
             'endereco',
             'bairro',
             'cidade',
             'uf',
             'email',
-            'password',
+            'senha',
             'status'
         ]
-        exclude = ['username']
         widgets = {
-            'password': forms.PasswordInput(),
-
+            'senha': forms.PasswordInput(),
         }
 
 
 class ResponsavelForm(forms.ModelForm):
     class Meta:
         model = Responsavel
-        fields = '__all__'
-        #exclude = ('familia',)
+        fields = [
+            'familia',
+            'parentesco',
+            'nome',
+            'dtanasc',
+            'cpf',
+            'cidade',
+            'celular_whatsapp',
+            'email',
+        ]
+        exclude = ('status','nacionalidade','naturalidade', 'estado_civil','senha','bairro', 'endereco','uf', 'nome_conjuge', 'rg')
 
         widgets = {
             'senha': forms.PasswordInput(),
-
         }
 
     def __init__(self, *args, **kwargs):
@@ -83,11 +80,24 @@ class ResponsavelForm(forms.ModelForm):
         self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
 
 
-
 class DependenteForm(forms.ModelForm):
     class Meta:
         model = Dependente
-        fields = '__all__'
+        fields = [
+            'familia',
+            'nome',
+            'dtanasc',
+            'estado_civil',
+            'nome_conjuge',
+            'cpf',
+            'cidade',
+            'celular_recado',
+            'convenio_medico',
+            'contato_fone_convenio',
+            'status',
+        ]
+        exclude = ('nacionalidade', 'naturalidade', 'senha', 'bairro', 'endereco', 'uf', 'rg')
+
 
 
     def __init__(self, *args, **kwargs):
@@ -100,8 +110,11 @@ class CuidadorForm(forms.ModelForm):
     class Meta:
         model = Cuidador
         fields = '__all__'
+        #exclude = ('nacionalidade', 'naturalidade', 'bairro', 'endereco', 'uf')
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['data_inicio'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['data_fim'].widget.attrs.update({'class': 'mask-date'})
         self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})

@@ -3,7 +3,45 @@
 {% block titulo %} Familia cadastrada {% endblock %}
 {% block content %}
 
+<div class="container">
+  {% if messages %}
+        {% for i in messages %}
+            <div class="alert {{i.tags}}" role="alert">
+                {{i}}
+            </div>
+
+        {% endfor %}
+    {% endif %}
+    <br>
+    {% if status == '1' %}
+        <div class="alert alert-sucess" role="alert">
+            Inserido com Sucesso!
+        </div>
+    {% endif %}
+
+    {% if status == '2' %}
+      <div class="alert alert-danger" role="alert">
+          Erro!
+      </div>
+
+    {% endif %}
+    {% if status == '3' %}
+    <div class="alert alert-sucess" role="alert">
+        Editado com sucesso!
+      </div>
+
+    {% endif %}
+    {% if status == '4' %}
+    <div class="alert alert-sucess" role="alert">
+        Excluido com sucesso!
+      </div>
+
+    {% endif %}
+
+
+</div>
 <div class = "card">
+
 <div class="card-body">
        <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
        <h5> Lista Familias </h5>

@@ -29,5 +29,6 @@ urlpatterns = [
 
     path('cuidador/', views.lista_cuidador, name='cuidadores'),
     path('cuidador/add/', views.cuidador_add, name='cuidador_add'),
-
+    path('cuidador/edit/<int:cuidador_pk>/', views.cuidador_edit, name='cuidador_edit'),
+    path('cuidador/delete/<int:cuidador_pk>/', views.cuidador_delete, name='cuidador_delete'),
 ]

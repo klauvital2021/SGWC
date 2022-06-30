@@ -8,7 +8,7 @@ from hashlib import sha256
 from django.contrib.auth.decorators import login_required
 from portal.forms import ResponsavelForm, CuidadorForm, DependenteForm, FamiliaForm
 from portal.models import Responsavel, Cuidador, Dependente, Familia, Usuario
-
+from django.contrib.sessions.middleware import SessionMiddleware
 
 
 class HomePageView(TemplateView):
@@ -33,21 +33,21 @@ def validar_login(request):
 
     #senha = sha256(senha.enconde()).hexdigest()
 
-    familia = Familia.objects.filter(email=email).filter(password=senha)
+    familia = Familia.objects.filter(email=email).filter(senha=senha)
 
     if len(familia) == 0:
           return redirect('/login/familia/?status=1')
 
     elif len(familia) > 0:
-        # request.session['status'] = {True, familia[0].id, familia[0].nome }
+         #request.session['status'] = { True, familia[0].id, familia[0].nome }
 
         request.session['logado'] = True
         request.session['familia'] = familia[0].nome
         request.session['familia_id'] = familia[0].id
         context = {
-                'logado' : request.session['logado'],
-                'familia': request.session['familia'],
-                'familia_id': request.session['familia_id']
+                'logado' : request.session.get('logado'),
+                'familia': request.session.get('familia'),
+                'familia_id': request.session.get('familia_id')
         }
         return render(request, 'portal/home.html', context)
 
@@ -59,36 +59,35 @@ def sair_familia(request):
 # FAMILIA
 
 def lista_familia(request):
-    if request.session['logado']:
+   if request.session.get('logado'):
          if request.session.get('familia') != 'Administrador':
-            sua_familia = Familia.objects.filter(nome__exact=(request.session['familia']))
-            context = {
-                 'familia':sua_familia,
-                 'logado': request.session['logado'],
-                 'familia_id':request.session['familia_id']
-
-            }
+             sua_familia = Familia.objects.filter(nome__exact=(request.session['familia']))
+             context = {
+                     'familia':sua_familia,
+                     'logado': request.session.get('logado'),
+                     'familia_id':request.session.get('familia_id'),
+             }
          else:
              listfamilia = Familia.objects.all()
 
              context = {
                'familia': listfamilia,
-               'logado': request.session['logado'],
-               'familia_id': request.session['familia_id']
-             }
-         return render(request, 'portal/familia.html',context)
-    else:
+               'logado': request.session.get('logado'),
+               'familia_id': request.session.get('familia_id')
+
+                }
+         return render(request, 'portal/familia.html', context)
+   else:
          return redirect('/login/familia/?status=2')
 
 
 def familia_add(request):
-    form = FamiliaForm(request.POST or None)
 
+    form = FamiliaForm(request.POST or None)
     if request.POST:
         if form.is_valid():
-
-            form.save()
-            return redirect('familia')
+           form.save()
+           return redirect('/portal/familia/?status=1')
 
     context = {
         'form': form,
@@ -120,13 +119,13 @@ def familia_delete(request, familia_pk):
 # RESPONSÁVEL
 
 def lista_responsavel(request):
-    if request.session['logado']:
+    if request.session.get('logado'):
         if request.session.get('familia') != 'Administrador':
-            listfamilia = Responsavel.objects.filter(familia__exact=(request.session['familia_id']))
+            listfamilia = Responsavel.objects.filter(familia__exact=(request.session.get('familia_id')))
             context = {
                 'responsavel': listfamilia,
-                'logado': request.session['logado'],
-                'familia_id':request.session['familia_id'],
+                'logado': request.session.get('logado'),
+                'familia_id':request.session.get('familia_id'),
 
             }
         else:
@@ -134,8 +133,8 @@ def lista_responsavel(request):
 
             context = {
                 'responsavel': listfamilia,
-                'logado': request.session['logado'],
-                'familia_id': request.session['familia_id'],
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
             }
         return render(request, 'portal/responsavel.html', context)
     else:
@@ -143,23 +142,25 @@ def lista_responsavel(request):
 
 
 def responsavel_add(request):
-    form = ResponsavelForm(request.POST)
-
-    if request.session.get('logado'):
-
-        if request.POST:
-            if form.is_valid():
-                form.save()
-                return redirect('responsaveis')
-
+    familia_id = request.session.get('familia_id')
+    if request.method == "GET":
+        form = ResponsavelForm()
         context = {
             'form': form,
-            'familia_id': request.session['familia_id'],
-
+            'familia': familia_id
         }
         return render(request, 'portal/responsavel_add.html', context)
     else:
-        return redirect('/login/familia/?status=2')
+        form = ResponsavelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('responsaveis')
+
+        context = {
+            'form': form,
+            'familia': familia_id
+        }
+    return render(request, 'portal/responsavel_add.html', context)
 
 
 def responsavel_edit(request, responsavel_pk):
@@ -178,7 +179,7 @@ def responsavel_edit(request, responsavel_pk):
 
 
 def responsavel_delete(request, responsavel_pk):
-    responsavel = Familia.objects.get(pk=responsavel_pk)
+    responsavel = Responsavel.objects.get(pk=responsavel_pk)
     responsavel.delete()
     return redirect('responsaveis')
 
@@ -186,30 +187,31 @@ def responsavel_delete(request, responsavel_pk):
 # DEPENDENTE
 
 def lista_dependente(request):
-    if request.session['logado']:
-        if (request.session['familia']) != 'Administrador':
-            seus_dependentes = Dependente.objects.filter(familia__exact=(request.session['id_familia']))
-
+    if request.session.get('logado'):
+        if request.session.get('familia') != 'Administrador':
+            listfamilia = Dependente.objects.filter(familia__exact=(request.session.get('familia_id')))
             context = {
-                'familia': seus_dependentes,
-                'logado': request.session['logado'],
+                'dependentes': listfamilia,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
+
             }
         else:
-            listdependente = Dependente.objects.all()
+            listfamilia = Dependente.objects.all()
 
             context = {
-                'familia': listdependente,
-                'logado': request.session['logado'],
+                'dependentes': listfamilia,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
             }
         return render(request, 'portal/dependente.html', context)
     else:
         return redirect('/login/familia/?status=2')
 
 
-
 def dependente_add(request):
+    familia_id = request.session.get('familia_id')
     form = DependenteForm(request.POST or None)
-
     if request.POST:
         if form.is_valid():
             form.save()
@@ -217,9 +219,9 @@ def dependente_add(request):
 
     context = {
         'form': form,
-
+        'familia': familia_id
     }
-    return render(request, 'portal/dependente_add.html' , context)
+    return render(request, 'portal/dependente_add.html', context)
 
 
 def dependente_edit(request, dependente_pk):
@@ -234,7 +236,7 @@ def dependente_edit(request, dependente_pk):
     context = {
         'form': form,
     }
-    return render(request, 'portal/dependente.html', context)
+    return render(request, 'portal/dependente_edit.html', context)
 
 
 def dependente_delete(request, dependente_pk):
@@ -244,20 +246,22 @@ def dependente_delete(request, dependente_pk):
 
 
 def lista_cuidador(request):
-    if request.session['logado']:
-        if (request.session['familia']) != 'Administrador':
-            seus_cuidadores = Cuidador.objects.filter(familia__exact=(request.session['id_familia']))
-
+    if request.session.get('logado'):
+        if request.session.get('familia') != 'Administrador':
+            listfamilia = Cuidador.objects.filter(familia__exact=(request.session.get('familia_id')))
             context = {
-                'familia': seus_cuidadores,
-                'logado': request.session['logado'],
+                'cuidadores': listfamilia,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
+
             }
         else:
-            listcuidador = Cuidador.objects.all()
+            listfamilia = Cuidador.objects.all()
 
             context = {
-                'familia': listcuidador,
-                'logado': request.session['logado'],
+                'cuidadores': listfamilia,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
             }
         return render(request, 'portal/cuidador.html', context)
     else:
@@ -265,6 +269,7 @@ def lista_cuidador(request):
 
 
 def cuidador_add(request):
+    familia_id = request.session.get('familia_id')
     form = CuidadorForm(request.POST or None)
     if request.POST:
         if form.is_valid():
@@ -273,12 +278,29 @@ def cuidador_add(request):
 
     context = {
         'form': form,
-
+        'familia': familia_id
     }
     return render(request, 'portal/cuidador_add.html', context)
 
+def cuidador_edit(request, cuidador_pk):
+    cuidador = Cuidador.objects.get(pk=cuidador_pk)
+    form = CuidadorForm(request.POST or None, instance=cuidador)
+
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            return redirect('cuidadores')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'portal/cuidador_edit.html', context)
 
 
+def cuidador_delete(request, cuidador_pk):
+    cuidador = Cuidador.objects.get(pk=cuidador_pk)
+    cuidador.delete()
+    return redirect('cuidadores')
 
 
 

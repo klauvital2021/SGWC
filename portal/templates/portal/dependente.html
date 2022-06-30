@@ -18,14 +18,10 @@
             <th>Nome</th>
             <th>Data nascimento</th>
             <th>Cidade</th>
-            <th>UF</th>
-            <th>Celular - WhatsApp</th>
+            <th>Telefone</th>
             <th>Estatus</th>
-            <th>Tipo de Usuário</th>
             <th>Nome do Convênio</th>
             <th>Contato do Convênio</th>
-            <th>Endereço do Convênio</th>
-
             <th>Acões</th>
         </tr>
       </thead>
@@ -37,13 +33,11 @@
              <td>{{ dependente.nome  }} </td>
              <td>{{ dependente.dtanasc }}</td>
              <td>{{ dependente.cidade }} </td>
-             <td>{{ dependente.uf }} </td>
              <td>{{ dependente.celular_whatsapp }} </td>
              <td>{{ dependente.status }} </td>
-             <td>{{ dependente.tipo_usuario}} </td>
              <td>{{ dependente.convenio_medico }} </td>
              <td>{{ dependente.contato_fone_convenio }} </td>
-             <td>{{ dependente.contato_endereco_convenio }} </td>
+
 
              <td>
                  <a class ="btn btn-warning btn-sm" href="{% url 'dependente_edit' dependente.id %}">Editar</a>

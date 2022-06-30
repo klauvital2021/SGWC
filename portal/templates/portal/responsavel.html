@@ -15,10 +15,9 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Data nascimento</th>
+                        <th>CPF</th>
                         <th>Cidade</th>
-                        <th>UF</th>
                         <th>Celular - WhatsApp</th>
-                        <th>Estatus</th>
                         <th>Parentesco</th>
                         <th>E-mail</th>
                         <th>Acões</th>
@@ -31,11 +30,10 @@
                          <td>{{ responsavel.id }} </td>
                          <td>{{ responsavel.nome  }} </td>
                          <td>{{ responsavel.dtanasc }}</td>
+                         <td>{{ responsavel.cpf }}</td>
                          <td>{{ responsavel.cidade }} </td>
-                         <td>{{ responsavel.uf }} </td>
                          <td>{{ responsavel.celular_whatsapp }} </td>
-                         <td>{{ responsavel.status }} </td>
-                         <td>{{ responsavel.parentesco }} </td>
+                         <td>{{ responsavel.parentesco}} </td>
                          <td>{{ responsavel.email }} </td>
                          <td>
                              <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' responsavel.id %}">Editar</a>

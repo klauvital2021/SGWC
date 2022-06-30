@@ -6,7 +6,7 @@
  <div class="card">
     <div class="card-body">
         <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
-        <h5>Editar Dependente</h5>
+        <h5>Editar Cuidador</h5>
 
         <hr>
           <form action="." method="post">
@@ -14,7 +14,7 @@
                   {{  form|bootstrap }}
 
                   <button class ="btn btn-success" type="submit">Salvar</button>
-                  <button class ="btn btn-warning" onclick="window.location.href='{% url 'dependentes' %}'">Cancelar</button>
+                  <button class ="btn btn-warning" onclick="window.location.href='{% url 'cuidadores' %}'">Cancelar</button>
           </form>
 
     </div>

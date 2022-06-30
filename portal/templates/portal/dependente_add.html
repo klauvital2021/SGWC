@@ -4,11 +4,11 @@
 {% block content %}
  <div class="card">
     <div class="card-body">
-        <h4> Família <B><label>{{ request.session.familia }}</label></B></h4>
+        <h4> Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
         <h5> Inserir Dependentes </h5>
 
          <hr>
-         <form action="." method="post">
+         <form action="{% url 'dependente_add' %}" method="post">
             {% csrf_token %}
             {{  form|bootstrap }}
 

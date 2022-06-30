@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.sessions.models import Session
-from django.contrib.auth.models import AbstractUser
-from django.urls import NoReverseMatch, reverse
+#from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 # ---------- Modelo Multi Tabelas ----------
 
 status_choices = (
-        ('1', 'Ativo'),
-        ('2', 'Inativo'),
+        ('A', 'Ativo'),
+        ('I', 'Inativo'),
     )
 
 civil_choices = (
@@ -20,117 +20,113 @@ civil_choices = (
     )
 
 regime_choices = (
-    ('1', 'CLT'),
-    ('2', 'PJ'),
-    ('3', 'Free Lance'),
-    ('4', 'Prestação Serviços'),
+    ('CLT', 'CLT'),
+    ('PJ', 'PJ'),
+    ('FREE', 'Free Lance'),
+    ('PS', 'Prestação Serviços'),
     )
 
 turno_choices = (
-    ('1', 'Diurno'),
-    ('2', 'Noturno'),
+    ('D', 'Diurno'),
+    ('N', 'Noturno'),
     )
 
 parentesco_choices = (
-    ('1', 'Filho'),
-    ('2', 'Neto'),
-    ('3', 'Irmão'),
-    ('4', 'Outro'),
+    ('F', 'Filho'),
+    ('N', 'Neto'),
+    ('I', 'Irmão'),
+    ('O', 'Outro'),
 
 )
 
-tipo_usuario_choices = (
-    ('1', 'Administrador'),
-    ('2', 'Responsável'),
-    ('3', 'Cuidador'),
-    ('4', 'Dependente'),
-    ('5', 'Técnico em Enfermagem')
-
-    )
-
 class Usuario(models.Model):
     nome = models.CharField(max_length=200, unique=True, blank=False, null=False, verbose_name='Nome')
-    dtanasc = models.DateField(db_column='dtanasc', blank=True, null=True, verbose_name='Dta Nasc')
+    dtanasc = models.DateField(db_column='dtanasc', blank=False, null=False, verbose_name='Dta Nasc')
     rg = models.CharField(max_length=200, blank=True, null=True, verbose_name='RG')
-    cpf = models.CharField(max_length=200, unique=True, blank=True, null=True, verbose_name='CPF')
-    endereco = models.CharField(max_length=200, blank=False, null=True, verbose_name='Endereço')
-    bairro = models.CharField(max_length=200, blank=False, null=True, verbose_name='Bairro')
-    cidade = models.CharField(max_length=200, blank=False, null=False, verbose_name='Cidade')
+    cpf = models.CharField(max_length=200, blank=True, null=True, verbose_name='CPF')
+    endereco = models.CharField(max_length=200, blank=True, null=True, verbose_name='Endereço')
+    bairro = models.CharField(max_length=200, blank=True, null=True, verbose_name='Bairro')
+    cidade = models.CharField(max_length=200, blank=True, null=True, verbose_name='Cidade')
     uf = models.CharField(db_column='UF', max_length=2, blank=True, null=True, verbose_name='Estado')
-    celular_whatsapp = models.CharField(max_length=200, unique=True, blank=False, null=False, verbose_name='Celular-What')
+    celular_whatsapp = models.CharField(max_length=200, unique=True, blank=True, null=True, verbose_name='Celular-What')
     celular_recado = models.CharField(max_length=200, blank=True, null=True, verbose_name='Recado')
-    estado_civil = models.CharField(max_length=1, choices=civil_choices, verbose_name='Estado Civil')
+    estado_civil = models.CharField(max_length=10, choices=civil_choices,blank=True, null=True, verbose_name='Estado Civil')
     nome_conjuge = models.CharField(max_length=200, blank=True, null=True, verbose_name='Cônjuge')
-    naturalidade = models.CharField(max_length=200, blank=True, null=True, verbose_name='Naturalidade')
-    nacionalidade = models.CharField(max_length=200, blank=False, null=True, verbose_name='Nacionalidade')
-    status = models.CharField(max_length=1, choices=status_choices, verbose_name='Estatus')
-    tipo_usuario = models.CharField(max_length=1, choices=tipo_usuario_choices, verbose_name='Usuário')
+    nacionalidade = models.CharField(max_length=200, blank=True, null=True, verbose_name='Nacionalidade')
+    status = models.CharField(max_length=1, choices=status_choices, blank=True, null=True, verbose_name='Estatus')
+
+    class Meta:
+        ordering = ['nome']
 
 
-class Familia(AbstractUser):
+class Familia(models.Model):
     nome = models.CharField(max_length=200, unique=True, blank=False, null=False, verbose_name='Nome')
     endereco = models.CharField(max_length=100, blank=False, null=False, verbose_name='Endereço')
     bairro = models.CharField(max_length=30, blank=False, null=False, verbose_name='Bairro')
     cidade = models.CharField(max_length=30, blank=False, null=False, verbose_name='Cidade')
     uf = models.CharField(db_column='UF', max_length=2, blank=True, null=True, verbose_name='Estado')
     email = models.EmailField(max_length=30, unique=True, blank=True, null=True, verbose_name='E-mail')
-    #senha = models.CharField(max_length=20, blank=False, null=False)
+    senha = models.CharField(max_length=20, blank=False, null=False)
     status = models.CharField(max_length=1, choices=status_choices, verbose_name='Estatus')
+
 
     class Meta:
         ordering = ['nome']
 
     def __str__(self):
-        return self.nome, self.email
+        return self.nome
 
     def get_absolute_url(self):
         return reverse("familia_edit", kwargs={"familia_pk": self.id})
 
 
 class Responsavel(Usuario):
-    familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True)
+    familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True, null=False, default='1', verbose_name='Família')
     parentesco = models.CharField(max_length=1, choices=parentesco_choices, verbose_name='Tipo de Responsável')
     email = models.EmailField(max_length=100, unique=True, blank=True, null=True, verbose_name='Email')
     senha = models.CharField(max_length=20, blank=False, null=False)
+
 
     class Meta:
        ordering = ['nome']
 
     def __str__(self):
-        return "{} - {} - {} - {}".format(self.nome, self.familia.id, self.familia.nome, self.email)
+        return "{} - {} - {} - {} - {}".format(self.nome, self.familia.id, self.familia.nome, self.email, self.parentesco)
+
+    def __int__(self):
+        return self.familia_id
 
     def get_absolute_url(self):
         return reverse("responsavel_edit", kwargs={"responsavel_pk": self.id})
 
 
-
 class Cuidador(Usuario):
+    familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True, default='1')
     data_inicio = models.DateField(db_column='dtaIni', blank=True, null=True, verbose_name='Admissão')
     data_fim = models.DateField(db_column='dtaFim', blank=True, null=True, verbose_name='Demissão')
-    regime_contratacao = models.CharField(max_length=1, choices=regime_choices, verbose_name='Contratação')
-    carga_horaria_semanal = models.IntegerField(db_column='carga_horaria_semanal', blank=True, null=True, verbose_name='Carga Hor Sem')
+    regime_contratacao = models.CharField(max_length=10, choices=regime_choices, null=True, verbose_name='Contratação')
+    carga_horaria_semanal = models.IntegerField(db_column='carga_horaria_semanal', blank=False, default=44, null=False, verbose_name='Carga Hor Sem')
     turno_trabalho = models.CharField(max_length=1, blank=False, null=False, choices=turno_choices, verbose_name='Turno')
     quem_indicou = models.CharField(max_length=100, blank=False, null=False, verbose_name='Indicação')
     salario_atual = models.DecimalField(db_column='salario_atual', max_digits=10, decimal_places=2, blank=False, null=False, default=0, verbose_name='Salário')
-    adicional = models.DecimalField(db_column='adicional', max_digits=10, decimal_places=2, blank=False, null=False, default=0, verbose_name='Adicional')
-    dia_pagamento = models.DateField(db_column='dia_pagamento', blank=True, null=True, verbose_name='Dia pag')
-    observacao = models.TextField(max_length=1000, blank=False, null=False, verbose_name='Senha')
-    familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True)
+    adicional = models.DecimalField(db_column='adicional', max_digits=10, decimal_places=2, blank=True, null=True, default=0, verbose_name='Adicional')
+    dia_pagamento = models.IntegerField(db_column='dia_pagamento', blank=True, null=True, verbose_name='Dia pag')
+    observacao = models.TextField(max_length=1000, blank=False, null=False, verbose_name='Observação')
     email = models.EmailField(max_length=30, unique=True, blank=True, null=True, verbose_name='E-mail')
-    senha = models.CharField(max_length=20, blank=False, null=False)
+    senha = models.CharField(max_length=20, blank=True, null=True, verbose_name='Senha')
 
     class Meta:
        ordering = ['nome']
 
     def __str__(self):
-        return "{} - {} ".format(self.nome, self.familia.nome)
+        return "{} - {} - {} - {} ".format(self.nome, self.familia.nome, self.dia_pagamento, self.salario_atual)
 
 
 class Dependente(Usuario):
-    convenio_medico = models.CharField(max_length=100, blank=False, null=False, verbose_name='Convênio')
-    contato_fone_convenio = models.CharField(max_length=20, blank=False, null=False, verbose_name='Telefone Convênio')
-    contato_endereco_convenio = models.CharField(max_length=100, blank=False, null=False, verbose_name='Endereço Convênio')
-    familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True)
+    convenio_medico = models.CharField(max_length=100, blank=True, null=True, verbose_name='Convênio')
+    contato_fone_convenio = models.CharField(max_length=20, blank=True, null=True, verbose_name='Telefone Convênio')
+    contato_endereco_convenio = models.CharField(max_length=100, blank=True, null=True, verbose_name='Endereço Convênio')
+    familia = models.ForeignKey(Familia, on_delete=models.CASCADE, blank=True, default='1',)
 
     class Meta:
        ordering = ['nome']

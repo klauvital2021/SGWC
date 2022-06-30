@@ -67,8 +67,9 @@ class ResponsavelForm(forms.ModelForm):
             'cidade',
             'celular_whatsapp',
             'email',
+            'senha',
         ]
-        exclude = ('status','nacionalidade','naturalidade', 'estado_civil','senha','bairro', 'endereco','uf', 'nome_conjuge', 'rg')
+        exclude = ('status','nacionalidade','naturalidade', 'estado_civil','bairro', 'endereco','uf', 'nome_conjuge', 'rg')
 
         widgets = {
             'senha': forms.PasswordInput(),
@@ -98,8 +99,6 @@ class DependenteForm(forms.ModelForm):
         ]
         exclude = ('nacionalidade', 'naturalidade', 'senha', 'bairro', 'endereco', 'uf', 'rg')
 
-
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
@@ -112,9 +111,14 @@ class CuidadorForm(forms.ModelForm):
         fields = '__all__'
         #exclude = ('nacionalidade', 'naturalidade', 'bairro', 'endereco', 'uf')
 
+        widgets = {
+                'senha': forms.PasswordInput(),
+            }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
         self.fields['data_inicio'].widget.attrs.update({'class': 'mask-date'})
         self.fields['data_fim'].widget.attrs.update({'class': 'mask-date'})
         self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})

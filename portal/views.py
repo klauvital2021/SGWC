@@ -147,7 +147,7 @@ def responsavel_add(request):
         form = ResponsavelForm()
         context = {
             'form': form,
-            'familia': familia_id
+            'familia': Responsavel.familia
         }
         return render(request, 'portal/responsavel_add.html', context)
     else:
@@ -165,7 +165,7 @@ def responsavel_add(request):
 
 def responsavel_edit(request, responsavel_pk):
     responsavel = Responsavel.objects.get(pk=responsavel_pk)
-    form = FamiliaForm(request.POST or None, instance=responsavel)
+    form = ResponsavelForm(request.POST or None, instance=responsavel)
 
     if request.POST:
         if form.is_valid():

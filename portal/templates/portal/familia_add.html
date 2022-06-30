@@ -5,7 +5,10 @@
  <div class="card">
     <div class="card-body">
         <h4> Olá Família <B><label>{{ request.session.familia }} {{ request.session.familia_id }}</label></B></h4>
-        <h5>Inserir Família</h5>
+        <hr>
+        <button class ="btn btn-warning" onclick="window.location.href='{% url 'login_familia' %}'"> Voltar </button>
+        <hr>
+        <h5><B>Inserir Família</B></h5>
         {{ form.non_field_errors }}
 
         <hr>
@@ -15,7 +18,7 @@
 
 
              <button class ="btn btn-success" type="submit">Salvar</button>
-             <button class ="btn btn-warning" onclick="window.location.href='{% url 'login_familia' %}'"> Cancelar </button>
+
         </form>
     </div>
 

@@ -5,14 +5,18 @@
  <div class="card">
     <div class="card-body">
         <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
-        <h5>Inserir Cuidador</h5>
         <hr>
+        <button class ="btn btn-warning" onclick="window.location.href='{% url 'cuidadores' %}'">Voltar</button>
+        <hr>
+        <h5><b>Inserir Cuidador</b></h5>
+        <hr>
+
         <form action="{% url 'cuidador_add' %}" method="post">
              {% csrf_token %}
              {{  form|bootstrap }}
 
              <button class ="btn btn-success" type="submit">Salvar</button>
-             <button class ="btn btn-warning" onclick="window.location.href='{% url 'cuidadores' %}'">Cancelar</button>
+
         </form>
     </div>
 

@@ -4,7 +4,7 @@
 {% block content %}
 <div class = "card">
 <div class="card-body">
-    <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
+    <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
     <h5> Lista Cuidadores </h5>
  <hr>
  <a class ="btn btn-success" href="{% url 'cuidador_add' %}">Inserir</a>

@@ -6,7 +6,11 @@
  <div class="card">
     <div class="card-body">
         <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id }}</label></B></h4>
-        <h5>Inserir Responsável</h5>
+        <hr>
+        <button class ="btn btn-warning" onclick="window.location.href='{% url 'responsaveis' %}'">Voltar</button>
+
+        <hr>
+        <h5><b>Inserir Responsável</b></h5>
 
         <hr>
          <form action="{% url 'responsavel_add' %}" method="post">
@@ -15,7 +19,6 @@
 
 
                <button class ="btn btn-success" type="submit">Salvar</button>
-               <button class ="btn btn-warning" onclick="window.location.href='{% url 'responsaveis' %}'">Cancelar</button>
 
 
          </form>

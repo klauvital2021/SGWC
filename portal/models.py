@@ -121,6 +121,8 @@ class Cuidador(Usuario):
     def __str__(self):
         return "{} - {} - {} - {} ".format(self.nome, self.familia.nome, self.dia_pagamento, self.salario_atual)
 
+    def get_absolute_url(self):
+        return reverse("cuidador_edit", kwargs={"cuidador_pk": self.id})
 
 class Dependente(Usuario):
     convenio_medico = models.CharField(max_length=100, blank=True, null=True, verbose_name='Convênio')
@@ -135,4 +137,145 @@ class Dependente(Usuario):
         return "{} - {} ".format(self.nome, self.familia.nome)
 
 
+tipo_medicamento_choices = (
+   ('Comprimido', 'Comprimido'),
+   ('Cápsulas', 'Cápsulas'),
+   ('Creme', 'Creme'),
+   ('Gotas', 'Gotas'),
+   ('Injeção Musc', 'Injeção Musc'),
+   ('Injeção Subcutânea', 'Injeção Subcutânea'),
+   ('Injeção Venosa', 'Injeção Venosa'),
+   ('Pomada', 'Pomada'),
+   ('Solução', 'Solução'),
+   ('Spray', 'Spray'),
+   ('Supositório', 'Supositório'),
 
+)
+
+especialidade_choices = (
+    ('Alergista', 'Alergista'),
+    ('Cardiologia', 'Cardiologia'),
+    ('Clinico Geral', 'Clinico Geral'),
+    ('Dermatologia', 'Dermatologia'),
+    ('Endocrinologia', 'Endocrinologia'),
+    ('Fisiatria', 'Fisiatria'),
+    ('Fonoaudiologia', 'Fonoaudiologia'),
+    ('Gastroenterologia', 'Gastroenterologia'),
+    ('Geriatria', 'Geriatria'),
+    ('Ginecologia', 'Ginecologia'),
+    ('Nefrologia', 'Nefrologia'),
+    ('Neurologia', 'Neurologia'),
+    ('Nutrição', 'Nutrição'),
+    ('Obstetrícia', 'Obstetrícia'),
+    ('Odontologia', 'Odontologia'),
+    ('Oftalmologia', 'Oftalmologia'),
+    ('Oncologia', 'Oncologia'),
+    ('Ortopedia', 'Ortopedia'),
+    ('Otorrinolaringologia', 'Otorrinolaringologia'),
+    ('Pediatria', 'Pediatria'),
+    ('Pneumologia', 'Pneumologia'),
+    ('Proctologia', 'Proctologia'),
+    ('Psicologia', 'Psicologia'),
+    ('Reumatologia', 'Reumatologia'),
+    ('Traumatologia', 'Traumatologia'),
+    ('Urologia', 'Urologia'),
+    ('Outras', 'Outras'),
+    ('Reumatologia', 'Reumatologia'),
+
+)
+atendimento_choices = (
+    ('Primeira', 'Primeira'),
+    ('Retorno-Exames', 'Retorno-Exames'),
+    ('Retorno', 'Retorno'),
+    )
+
+
+class Consultas(models.Model):
+    dependente = models.ForeignKey(Dependente, on_delete=models.CASCADE, blank=False, null=False,)
+    data_consulta = models.DateField(db_column='data_consulta', blank=False, null=False, verbose_name='Data Consulta')
+    hora = models.TimeField(db_column='hora_consulta', blank=False, null=False, verbose_name='Hora')
+    especialidade = models.CharField(max_length=30, choices=especialidade_choices, blank=False, null=False, verbose_name='Especialista')
+    local = models.CharField(max_length=100, blank=True, null=True, verbose_name='Local')
+    nome_especialista = models.CharField(max_length=100, blank=False, null=False, verbose_name='Médico(a)')
+    fone_contato = models.CharField(max_length=100, blank=True, null=True, verbose_name='Fone')
+    atendimento = models.CharField(max_length=30, choices=atendimento_choices, verbose_name='Atendimento')
+    motivo_consulta = models.CharField(max_length=300, blank=True, null=True, verbose_name='Motivo Consulta')
+    sintomas = models.CharField(max_length=300, blank=True, null=True, verbose_name='Sintomas')
+    observacao = models.CharField(max_length=300, blank=True, null=True, verbose_name='Observação')
+    acompanhante_resp = models.ForeignKey(Responsavel, on_delete=models.CASCADE, blank=False, null=False)
+    cancelamento = models.DateField(db_column='dataCancelamento', blank=True, null=True, verbose_name='Data Cancelamento')
+    motivo_canc = models.CharField(max_length=30, choices=atendimento_choices, blank=True, null=True, verbose_name='Motivo Cancelamento')
+
+    class Meta:
+       ordering = ['data_consulta', 'hora']
+
+    def __str__(self):
+        return "{} - {} - {} - {}".format(self.especialidade, self.dependente.nome, self.nome_especialista, self.acompanhante_resp.nome)
+
+
+class Pos_Consultas(models.Model):
+    dependente = models.ForeignKey(Dependente, on_delete=models.CASCADE, blank=False, null=False,verbose_name='Dependente')
+    consulta = models.ForeignKey(Consultas, on_delete=models.CASCADE, blank=True, null=True)
+    acompanhante_resp = models.ForeignKey(Responsavel, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Responsável')
+    diagnostico = models.TextField(max_length=200, blank=False, null=False, verbose_name='Diagnóstico')
+    tratamento = models.TextField(max_length=200, blank=True, null=True, verbose_name='Tratamento')
+    receita = models.ImageField(upload_to= '', blank=True, null=True, width_field = 'width', height_field = 'height', verbose_name='Upload Receita')
+    observacao = models.TextField(max_length=200, blank=True, null=True, verbose_name='Tratamento')
+
+    def __str__(self):
+        return "{} - {} - {} ".format(self.consulta.id, self.dependente)
+
+    def get_upload_to(instance, filename):
+        """
+        Obtain a valid upload path for an image file.
+
+        This needs to be a module-level function so that it can be referenced within migrations,
+        but simply delegates to the `get_upload_to` method of the instance, so that AbstractImage
+        subclasses can override it.
+        """
+        return instance.get_upload_to(filename)
+
+posologia_choices = (
+        ('1 vez ', '1 vez'),
+        ('2 vezes ', '2 vezes'),
+        ('3 vezes ', '3 vezes'),
+        ('4 vezes ', '4 vezes'),
+    )
+uso_continuo_choices = (
+        ('Sim ', 'Sim'),
+        ('Não ', 'Não'),
+    )
+fornecedor_principal_choices = (
+        ('Farmácia Hospital ', 'Farmácia Hospital'),
+        ('Farmácia Popular ', 'Farmácia Popular'),
+        ('Farmácia - Drogaria ', 'Farmácia - Drogaria'),
+        ('Drogaria - Site ', 'Drogaria - Site'),
+        ('Mercado Livre ', 'Mercado Livre'),
+        ('Outros ', 'Outros'),
+    )
+
+class Medicamentos(models.Model):
+    medicamento_prescrito = models.CharField(max_length=100, blank=False, null=False,verbose_name='Medicamento Prescrito')
+    principio_ativo = models.CharField(max_length=40, blank=True, null=False, verbose_name='Princípo Ativo')
+    indicacoes = models.TextField(max_length=100, blank=True, null=True, verbose_name='Indicações')
+    tipo_medicamento = models.CharField(max_length=18, choices=tipo_medicamento_choices, verbose_name='Tipo de Medicamento')
+    dosagem = models.CharField(max_length=40, blank=False, null=False, verbose_name='Princípo Ativo')
+    posologia = models.CharField(max_length=30, choices=posologia_choices, verbose_name='Tipo de Medicamento')
+    uso_continuo = models.CharField(max_length=30, choices=uso_continuo_choices, verbose_name='Uso Continuo')
+    data_inicio = models.DateField(db_column='dtaInicio', blank=True, null=True, verbose_name='Dta Inicio')
+    data_fim = models.DateField(db_column='dtaFim', blank=True, null=True, verbose_name='Dta Fim')
+    forma_uso = models.TextField(max_length=100, blank=False, null=False, verbose_name='Forma de Uso')
+    orientacao_tratamento = models.TextField(max_length=100, blank=False, null=False, verbose_name='Orientações')
+    medico_resp = models.CharField(max_length=100, blank=True, null=True, verbose_name='Medico Resp')
+    fornecedor_principal = models.CharField(max_length=20, choices=fornecedor_principal_choices, verbose_name='Fornecedor')
+    dependente = models.ForeignKey(Dependente, on_delete=models.CASCADE, blank=False)
+    pos_consulta = models.ForeignKey(Pos_Consultas, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+            ordering = ['medicamento_prescrito']
+
+    def __str__(self):
+            return "{} - {} -{} - {} - {} - {} ".format(self.medicamento_prescrito, self.dependente, self.fornecedor_principal, self.indicacoes, self.dosagem, self.medico_resp)
+
+    def get_absolute_url(self):
+        return reverse("medicamento_edit", kwargs={"medicamento_pk": self.id})

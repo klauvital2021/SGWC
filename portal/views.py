@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from hashlib import sha256
 from django.contrib.auth.decorators import login_required
-from portal.forms import ResponsavelForm, CuidadorForm, DependenteForm, FamiliaForm
-from portal.models import Responsavel, Cuidador, Dependente, Familia, Usuario
+from portal.forms import ResponsavelForm, CuidadorForm, DependenteForm, FamiliaForm, ConsultaForm, MedicamentoForm, PosConsultaForm
+from portal.models import Responsavel, Cuidador, Dependente, Familia, Consultas, Pos_Consultas, Medicamentos
 from django.contrib.sessions.middleware import SessionMiddleware
 
 
@@ -302,7 +302,210 @@ def cuidador_delete(request, cuidador_pk):
     cuidador.delete()
     return redirect('cuidadores')
 
+# Consultas
+def lista_consulta(request):
+    if request.session.get('logado'):
+        if request.session.get('familia') != 'Administrador':
+            listConsulta = Consultas.objects.filter(dependente__familia =(request.session.get('familia_id')))
+            context = {
+                'familia':  listConsulta,
+                'logado': request.session.get('logado'),
+                'familia_id':request.session.get('familia_id'),
+
+            }
+        else:
+            listConsulta = Consultas.objects.all()
+
+            context = {
+                'consultas': listConsulta,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
+            }
+        return render(request, 'portal/consultas.html', context)
+    else:
+        return redirect('/login/familia/?status=2')
 
 
+def consulta_add(request):
+    dependentes = Dependente.objects.filter(familia=request.session.get('familia_id'))
+
+    if request.method == "GET":
+        ConsultaForm.dependente = dependentes
+        form = ConsultaForm()
+
+        context = {
+            'form': form,
+
+        }
+
+    else:
+        ConsultaForm.dependente = dependentes
+        form = ConsultaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('consultas')
+
+        context = {
+            'form': form,
+
+        }
+    return render(request, 'portal/consulta_add.html', context)
+
+
+def consulta_edit(request, consulta_pk):
+    consulta = Consultas.objects.get(pk=consulta_pk)
+    form = ConsultaForm(request.POST or None, instance=consulta)
+
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            return redirect('consulta')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'portal/consulta_edit.html', context)
+
+
+def consulta_delete(request, consulta_pk):
+    consulta = Consultas.objects.get(pk=consulta_pk)
+    consulta.delete()
+    return redirect('consultas')
+
+
+# Pós Consultas
+def lista_posconsulta(request):
+    if request.session.get('logado'):
+        if request.session.get('familia') != 'Administrador':
+            listPosConsulta = Pos_Consultas.objects.filter(consulta__dependente__familia=(request.session.get('familia_id')).filter(consulta__pos_consultas=Consultas.id))
+
+            context = {
+                'posconsulta':  listPosConsulta,
+                'logado': request.session.get('logado'),
+                'familia_id':request.session.get('familia_id'),
+
+            }
+        else:
+            listPosConsulta  = Pos_Consultas.objects.all()
+
+            context = {
+                'posconsulta':  listPosConsulta,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
+            }
+        return render(request, 'portal/posconsulta.html', context)
+    else:
+        return redirect('/login/familia/?status=2')
+
+
+def posconsulta_add(request):
+    familia_id = request.session.get('familia_id')
+    if request.method == "GET":
+        form = PosConsultaForm()
+        context = {
+            'form': form,
+            'familia': familia_id
+        }
+
+    else:
+        form = PosConsultaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('posconsulta')
+
+        context = {
+            'form': form,
+            'familia': familia_id
+        }
+    return render(request, 'portal/posconsulta_add.html', context)
+
+
+def posconsulta_edit(request, posconsulta_pk):
+    posconsulta = Pos_Consultas.objects.get(pk=posconsulta_pk)
+    form = PosConsultaForm(request.POST or None, instance=posconsulta)
+
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            return redirect('posconsulta')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'portal/posconsulta_edit.html', context)
+
+
+def posconsulta_delete(request, consulta_pk):
+    posconsulta = Pos_Consultas.objects.get(pk=consulta_pk)
+    posconsulta.delete()
+    return redirect('posconsulta')
+
+
+# Medicamentos
+def lista_medicamento(request):
+    if request.session.get('logado'):
+        if request.session.get('familia') != 'Administrador':
+            listMedicamento = Medicamentos.objects.filter(dependente__familia=(request.session.get('familia_id')))
+
+            context = {
+                'medicamentos':  listMedicamento,
+                'logado': request.session.get('logado'),
+                'familia_id':request.session.get('familia_id'),
+
+            }
+        else:
+            listMedicamento  = Medicamentos.objects.all()
+
+            context = {
+                'medicamentos':  listMedicamento,
+                'logado': request.session.get('logado'),
+                'familia_id': request.session.get('familia_id'),
+            }
+        return render(request, 'portal/medicamentos.html', context)
+    else:
+        return redirect('/login/familia/?status=2')
+
+
+def medicamentos_add(request):
+    familia_id = request.session.get('familia_id')
+    if request.method == "GET":
+        form = MedicamentoForm()
+        context = {
+            'form': form,
+            'familia': familia_id
+        }
+
+    else:
+        form = MedicamentoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('medicamento')
+
+        context = {
+            'form': form,
+            'familia': familia_id
+        }
+    return render(request, 'portal/medicamentos_add.html', context)
+
+
+def medicamento_edit(request, medicamento_pk):
+    medicamento = Medicamentos.objects.get(pk=medicamento_pk)
+    form = MedicamentoForm(request.POST or None, instance=medicamento)
+
+    if request.POST:
+        if form.is_valid():
+            form.save()
+            return redirect('medicamento_edit')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'portal/medicamentos_edit.html', context)
+
+
+def medicamento_delete(request, medicamento_pk):
+    medicamento = Pos_Consultas.objects.get(pk=medicamento_pk)
+    medicamento.delete()
+    return redirect('medicamento')
 
 

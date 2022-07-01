@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Consultas {% endblock %}
+{% block content %}
+<div class = "card">
+<div class="card-body">
+    <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+    <h5> Lista Consultas </h5>
+ <hr>
+ <a class ="btn btn-success" href="{% url 'consulta_add'  %}">Inserir</a>
+    <table class = "table table-striped">
+      <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Data </th>
+            <th>Hora</th>
+            <th>Local</th>
+            <th>Especialidade</th>
+            <th>Médico(a)</th>
+            <th>Fone Contato</th>
+            <th>Atendimento</th>
+            <th>Motivo Consulta</th>
+            <th>Acompanhante</th>
+            <th>Cancelamento</th>
+            <th>Acões</th>
+        </tr>
+      </thead>
+      <tbody>
+         {%  for consulta in consultas %}
+
+         <tr>
+             <td>{{ consulta.id }} </td>
+             <td>{{ consulta.data_consulta }} </td>
+             <td>{{ consulta.hora }}</td>
+             <td>{{ consulta.local }} </td>
+             <td>{{ consulta.especialidade}} </td>
+             <td>{{ consulta.fone_contato }} </td>
+             <td>{{ consulta.atendimento }} </td>
+             <td>{{ consulta.motivo_consulta}} </td>
+             <td>{{ consulta.acompanhante_resp }} </td>
+             <td>{{ consulta.cancelamento }} </td>
+             <td>
+                 <a class ="btn btn-warning btn-sm" href="{% url 'consulta_edit' consulta.id %}">Editar</a>
+                 <a class ="btn btn-danger btn-sm" href="{% url 'consulta_delete' consulta.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ consulta.id }} ?  ')">Excluir</a>
+                 <a class="breadcrumb blue"  href="{% url 'posconsulta'  %}">Pós Consulta</a>
+             </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+  </table>
+
+</div>
+</div>
+{% endblock %}

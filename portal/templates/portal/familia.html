@@ -4,86 +4,84 @@
 {% block content %}
 
 <div class="container">
-  {% if messages %}
-        {% for i in messages %}
-            <div class="alert {{i.tags}}" role="alert">
-                {{i}}
+      {% if messages %}
+            {% for i in messages %}
+                <div class="alert {{i.tags}}" role="alert">
+                    {{i}}
+                </div>
+
+            {% endfor %}
+        {% endif %}
+        <br>
+        {% if status == '1' %}
+            <div class="alert alert-sucess" role="alert">
+                Inserido com Sucesso!
             </div>
+        {% endif %}
 
-        {% endfor %}
-    {% endif %}
-    <br>
-    {% if status == '1' %}
+        {% if status == '2' %}
+          <div class="alert alert-danger" role="alert">
+              Erro!
+          </div>
+
+        {% endif %}
+        {% if status == '3' %}
         <div class="alert alert-sucess" role="alert">
-            Inserido com Sucesso!
-        </div>
-    {% endif %}
+            Editado com sucesso!
+          </div>
 
-    {% if status == '2' %}
-      <div class="alert alert-danger" role="alert">
-          Erro!
-      </div>
+        {% endif %}
+        {% if status == '4' %}
+        <div class="alert alert-sucess" role="alert">
+            Excluido com sucesso!
+          </div>
 
-    {% endif %}
-    {% if status == '3' %}
-    <div class="alert alert-sucess" role="alert">
-        Editado com sucesso!
-      </div>
-
-    {% endif %}
-    {% if status == '4' %}
-    <div class="alert alert-sucess" role="alert">
-        Excluido com sucesso!
-      </div>
-
-    {% endif %}
+        {% endif %}
 
 
 </div>
 <div class = "card">
-
-<div class="card-body">
+    <div class="card-body">
        <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
        <h5> Lista Familias </h5>
 
-    <table class = "table table-striped">
+       <table class = "table table-striped">
 
-      <thead>
+          <thead>
 
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Status</th>
-            <th>Endereço</th>
-            <th>Bairro</th>
-            <th>Cidade</th>
-            <th>UF</th>
-            <th>Email</th>
-            <th>Acões</th>
-        </tr>
-      </thead>
-      <tbody>
-         {%  for familia in familia %}
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Endereço</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>UF</th>
+                <th>Email</th>
+                <th>Acões</th>
+            </tr>
+          </thead>
+              <tbody>
+                 {%  for familia in familia %}
+                         {% csrf_token %}
+                     <tr>
+                         <td>{{ familia.id}} </td>
+                         <td>{{ familia.nome  }} </td>
+                         <td>{{ familia.status }}</td>
+                         <td>{{ familia.endereco }}</td>
+                         <td>{{ familia.bairro }}</td>
+                         <td>{{ familia.cidade }} </td>
+                         <td>{{ familia.uf }} </td>
+                         <td>{{ familia.email}} </td>
 
-         {% csrf_token %}
-         <tr>
-             <td>{{ familia.id}} </td>
-             <td>{{ familia.nome  }} </td>
-             <td>{{ familia.status }}</td>
-             <td>{{ familia.endereco }}</td>
-             <td>{{ familia.bairro }}</td>
-             <td>{{ familia.cidade }} </td>
-             <td>{{ familia.uf }} </td>
-             <td>{{ familia.email}} </td>
-
-             <td>
-                 <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' familia.id %}">Editar</a>
-                 <a class ="btn btn-danger btn-sm" href="{% url 'familia_delete' familia.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ familia.id }} ?  ')">Excluir</a>
-             </td>
-         </tr>
-         {% endfor %}
-      </tbody>
-  </table>
+                         <td>
+                             <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' familia.id %}">Editar</a>
+                             <a class ="btn btn-danger btn-sm" href="{% url 'familia_delete' familia.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ familia.id }} ?  ')">Excluir</a>
+                         </td>
+                     </tr>
+                {% endfor %}
+              </tbody>
+       </table>
 
 </div>
 </div>

@@ -31,4 +31,20 @@ urlpatterns = [
     path('cuidador/add/', views.cuidador_add, name='cuidador_add'),
     path('cuidador/edit/<int:cuidador_pk>/', views.cuidador_edit, name='cuidador_edit'),
     path('cuidador/delete/<int:cuidador_pk>/', views.cuidador_delete, name='cuidador_delete'),
+
+    path('consulta/', views.lista_consulta, name='consultas'),
+    path('consulta/add/', views.consulta_add, name='consulta_add'),
+    path('consulta/edit/<int:consulta_pk>/', views.consulta_edit, name='consulta_edit'),
+    path('consulta/delete/<int:consulta_pk>/', views.consulta_delete, name='consulta_delete'),
+
+    path('posconsulta/', views.lista_posconsulta, name='posconsulta'),
+    path('posconsulta/add/', views.posconsulta_add, name='posconsulta_add'),
+    path('posconsulta/edit/<int:posconsulta_pk>/', views.posconsulta_edit, name='posconsulta_edit'),
+    path('posconsulta/delete/<int:posconsulta_pk>/', views.posconsulta_delete, name='posconsulta_delete'),
+
+    path('medicamento/', views.lista_medicamento, name='medicamento'),
+    path('medicamento/add/', views.medicamentos_add, name='medicamento_add'),
+    path('medicamento/edit/<int:medicamento_pk>/', views.medicamento_edit, name='medicamento_edit'),
+    path('medicamento/delete/<int:medicamento_pk>/', views.medicamento_delete, name='medicamento_delete'),
+
 ]

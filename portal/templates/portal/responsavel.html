@@ -5,7 +5,6 @@
     <div class="card-body">
         <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
         <h5> Lista Responsáveis </h5>
-
         <hr>
         <a class ="btn btn-success" href="{% url 'responsavel_add' %} ">Inserir</a>
         <form action="{% url 'responsaveis' %}" method="post">

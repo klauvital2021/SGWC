@@ -1,7 +1,7 @@
 import requests
 from django import forms
 from django.forms import PasswordInput
-from portal.models import Responsavel, Dependente, Cuidador,Familia
+from portal.models import Responsavel, Dependente, Cuidador,Familia, Consultas, Medicamentos, Pos_Consultas
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -77,6 +77,7 @@ class ResponsavelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         self.fields['dtanasc'].widget.attrs.update({'class': 'mask-date'})
         self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
 
@@ -121,4 +122,38 @@ class CuidadorForm(forms.ModelForm):
         self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
         self.fields['data_inicio'].widget.attrs.update({'class': 'mask-date'})
         self.fields['data_fim'].widget.attrs.update({'class': 'mask-date'})
-        self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
+
+
+
+class ConsultaForm(forms.ModelForm):
+    class Meta:
+        model = Consultas
+        fields = '__all__'
+
+        widgets = {
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['data_consulta'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['hora'].widget.attrs.update({'class': 'mask-cpf'})
+
+
+class PosConsultaForm(forms.ModelForm):
+    class Meta:
+        model = Pos_Consultas
+        fields = '__all__'
+
+class MedicamentoForm(forms.ModelForm):
+    class Meta:
+        model = Medicamentos
+        fields = '__all__'
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['data_inicio'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['data_fim'].widget.attrs.update({'class': 'mask-date'})
+        self.fields['hora'].widget.attrs.update({'class': 'mask-hora'})
+

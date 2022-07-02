@@ -61,6 +61,12 @@ def familia_delete(request):
 class ResponsavelListView(ListView):
     model = Responsavel
 
+    def get_queryset(self):
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        queryset = Responsavel.objects.filter(familia__nome=familia)
+        return queryset
+
 
 class ResponsavelDetailView(DetailView):
     model = Responsavel

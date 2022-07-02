@@ -7,6 +7,7 @@ from .models import Cuidador, Dependente, Familia, Responsavel
 class CuidadorAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
+        'familia',
         'data_inicio',
         'data_fim',
     )
@@ -15,6 +16,7 @@ class CuidadorAdmin(admin.ModelAdmin):
         'usuario__user__first_name',
         'usuario__user__last_name',
         'usuario__user__email',
+        'familia__nome',
     )
     # list_filter = ('type',)
     # date_hierarchy = 'created'
@@ -24,6 +26,7 @@ class CuidadorAdmin(admin.ModelAdmin):
 class DependenteAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
+        'familia',
         'rg',
         'cpf',
     )
@@ -48,6 +51,7 @@ class FamiliaAdmin(admin.ModelAdmin):
         'usuario__user__first_name',
         'usuario__user__last_name',
         'usuario__user__email',
+        'familia__nome',
     )
     # list_filter = ('type',)
     # date_hierarchy = 'created'
@@ -57,6 +61,7 @@ class FamiliaAdmin(admin.ModelAdmin):
 class ResponsavelAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
+        'familia',
         'rg',
         'cpf',
     )
@@ -65,6 +70,7 @@ class ResponsavelAdmin(admin.ModelAdmin):
         'usuario__user__first_name',
         'usuario__user__last_name',
         'usuario__user__email',
+        'familia__nome',
     )
     # list_filter = ('type',)
     # date_hierarchy = 'created'

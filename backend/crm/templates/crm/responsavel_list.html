@@ -7,33 +7,31 @@
       <h5> Lista Responsáveis </h5>
       <hr>
       <a class ="btn btn-success" href="{% url 'responsavel_add' %} ">Inserir</a>
-      <form action="{% url 'responsaveis' %}" method="post">
+      <form action="." method="POST">
         <table class = "table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nome</th>
-              <th>Data nascimento</th>
               <th>CPF</th>
+              <th>E-mail</th>
+              <th>Data nascimento</th>
               <th>Cidade</th>
               <th>Celular - WhatsApp</th>
               <th>Parentesco</th>
-              <th>E-mail</th>
               <th>Acões</th>
             </tr>
           </thead>
           <tbody>
-            {%  for responsavel in responsavel %}
+            {%  for responsavel in object_list %}
               {% csrf_token %}
               <tr>
-                <td>{{ responsavel.id }} </td>
-                <td>{{ responsavel.nome  }} </td>
-                <td>{{ responsavel.dtanasc }}</td>
-                <td>{{ responsavel.cpf }}</td>
-                <td>{{ responsavel.cidade }} </td>
-                <td>{{ responsavel.celular_whatsapp }} </td>
-                <td>{{ responsavel.parentesco}} </td>
-                <td>{{ responsavel.email }} </td>
+                <td>{{ responsavel.user.get_full_name }} </td>
+                <td>{{ responsavel.cpf|default:"---" }}</td>
+                <td>{{ responsavel.user.email }} </td>
+                <td>{{ responsavel.data_nascimento|date:"d/m/Y"|default:"---" }} </td>
+                <td>{{ responsavel.cidade|default:"---" }} </td>
+                <td>{{ responsavel.celular_whatsapp|default:"---" }} </td>
+                <td>{{ responsavel.get_parentesco_do_responsavel_display|default:"---" }} </td>
                 <td>
                   <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' responsavel.id %}">Editar</a>
                   <a class ="btn btn-danger btn-sm" href="{% url 'responsavel_delete' responsavel.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>

@@ -40,7 +40,7 @@ class Usuario(Address, Active):
     dependente_contato_endereco_convenio = models.CharField('Endereço Convênio', max_length=100, blank=True, null=True)  # noqa E501
 
     class Meta:
-        ordering = ('user__first_name',)
+        ordering = ('user__first_name', 'user__last_name')
 
     @property
     def full_name(self):

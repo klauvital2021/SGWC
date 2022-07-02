@@ -1,9 +1,9 @@
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 
 from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
 from .models import Cuidador, Dependente, Familia, Responsavel

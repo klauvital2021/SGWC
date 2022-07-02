@@ -27,6 +27,12 @@ python manage.py migrate
 python manage.py createsuperuser --username="admin" --email=""
 ```
 
+## Diagramas ER
+
+```
+python manage.py graph_models -a -g -o img/models.png  # all
+```
+
 ## Links
 
 https://www.djangoproject.com/

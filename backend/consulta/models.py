@@ -16,6 +16,7 @@ class Consulta(models.Model):
     dependente = models.ForeignKey(
         Dependente,
         on_delete=models.CASCADE,
+        related_name='consultas'
     )
     data_consulta = models.DateField('Data Consulta', blank=False, null=False)  # noqa E501
     hora = models.TimeField('Hora', blank=False, null=False)  # noqa E501
@@ -46,6 +47,7 @@ class PosConsulta(models.Model):
     dependente = models.ForeignKey(
         Dependente,
         on_delete=models.CASCADE,
+        related_name='pos_consultas'
     )
     consulta = models.ForeignKey(
         Consulta,

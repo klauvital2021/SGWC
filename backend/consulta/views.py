@@ -1,5 +1,5 @@
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import ConsultaForm, MedicamentoForm, PosConsultaForm
 from .models import Consulta, Medicamento, PosConsulta

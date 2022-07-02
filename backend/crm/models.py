@@ -10,6 +10,8 @@ from backend.core.constants import (
 )
 from backend.core.models import Active, Address
 
+from .managers import ResponsavelManager
+
 
 class Usuario(Address, Active):
     user = models.ForeignKey(
@@ -65,8 +67,10 @@ class Familia(Address, Active):
 
 
 class Responsavel(Usuario):
+    objects = ResponsavelManager()
 
     class Meta:
+        proxy = True
         verbose_name = 'Responsável'
         verbose_name_plural = 'Responsáveis'
 

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Cuidadores {% endblock %}
+{% block content %}
+  <div class = "card">
+    <div class="card-body">
+      <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+      <h5> Lista Cuidadores </h5>
+      <hr>
+      <a class ="btn btn-success" href="{% url 'cuidador_add' %}">Inserir</a>
+      <table class = "table table-striped">
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Dta nasc</th>
+            <th>Cidade</th>
+            <th>Cel/Whats</th>
+            <th>Estatus</th>
+            <th>Admissão</th>
+            <th>Demissao</th>
+            <th>Contratação</th>
+            <th>CHoraria</th>
+            <th>Turno</th>
+            <th>Salario</th>
+            <th>Adicional</th>
+            <th>Dia de pag</th>
+            <th>Acões</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%  for cuidador in cuidadores %}
+
+            <tr>
+              <td>{{ cuidador.id }} </td>
+              <td>{{ cuidador.nome  }} </td>
+              <td>{{ cuidador.dtanasc }}</td>
+              <td>{{ cuidador.cidade }} </td>
+              <td>{{ cuidador.celular_whatsapp }} </td>
+              <td>{{ cuidador.status }} </td>
+              <td>{{ cuidador.data_inicio }} </td>
+              <td>{{ cuidador.data_fim }} </td>
+              <td>{{ cuidador.regime_contratacao }} </td>
+              <td>{{ cuidador.carga_horaria_semanal }} </td>
+              <td>{{ cuidador.turno_trabalho }} </td>
+              <td>{{ cuidador.salario_atual }} </td>
+              <td>{{ cuidador.adicional }} </td>
+              <td>{{ cuidador.dia_pagamento }} </td>
+
+              <td>
+                <a class ="btn btn-warning btn-sm" href="{% url 'cuidador_edit' cuidador.id %}">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="{% url 'cuidador_delete' cuidador.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ cuidador.id }} ?  ')">Excluir</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

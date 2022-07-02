@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Familia cadastrada {% endblock %}
+{% block content %}
+
+  <div class="container">
+  </div>
+  <div class = "card">
+    <div class="card-body">
+      <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
+      <h5> Lista Famílias </h5>
+
+      <table class = "table table-striped">
+
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Endereço</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>UF</th>
+            <th>Email</th>
+            <th>Acões</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%  for familia in object_list %}
+            {% csrf_token %}
+            <tr>
+              <td>{{ familia.id}} </td>
+              <td>{{ familia.nome  }} </td>
+              <td>{{ familia.status }}</td>
+              <td>{{ familia.endereco }}</td>
+              <td>{{ familia.bairro }}</td>
+              <td>{{ familia.cidade }} </td>
+              <td>{{ familia.uf }} </td>
+              <td>{{ familia.email}} </td>
+
+              <td>
+                <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' familia.id %}">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="{% url 'familia_delete' familia.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ familia.id }} ?  ')">Excluir</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

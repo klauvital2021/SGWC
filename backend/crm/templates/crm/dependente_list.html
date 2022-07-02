@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Dependentes {% endblock %}
+
+{% block content %}
+  <div class = "card">
+    <div class="card-body">
+      <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+      <h5> Lista Dependentes </h5>
+
+      <hr>
+      <a class ="btn btn-success" href="{% url 'dependente_add' %}">Inserir</a>
+      <table class = "table table-striped">
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Data nascimento</th>
+            <th>Cidade</th>
+            <th>Telefone</th>
+            <th>Estatus</th>
+            <th>Nome do Convênio</th>
+            <th>Contato do Convênio</th>
+            <th>Acões</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%  for dependente in dependentes %}
+
+            <tr>
+              <td>{{ dependente.id }} </td>
+              <td>{{ dependente.nome  }} </td>
+              <td>{{ dependente.dtanasc }}</td>
+              <td>{{ dependente.cidade }} </td>
+              <td>{{ dependente.celular_whatsapp }} </td>
+              <td>{{ dependente.status }} </td>
+              <td>{{ dependente.convenio_medico }} </td>
+              <td>{{ dependente.contato_fone_convenio }} </td>
+
+
+              <td>
+                <a class ="btn btn-warning btn-sm" href="{% url 'dependente_edit' dependente.id %}">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="{% url 'dependente_delete' dependente.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ dependente.id }} ?  ')">Excluir</a>
+              </td>
+            </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

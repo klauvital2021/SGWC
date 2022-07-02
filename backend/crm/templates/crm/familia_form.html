@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <h4> Olá Família <B><label>{{ request.session.familia }} {{ request.session.familia_id }}</label></B></h4>
+      <button class ="btn btn-warning" onclick="window.location.href='{% url 'login' %}'"> Voltar </button>
+      <hr>
+      <h5><B>Inserir Família</B></h5>
+      {{ form.non_field_errors }}
+
+      <hr>
+      <form action="{% url 'cadastrar_usuario' %}" method="POST">
+        {% csrf_token %}
+        {{  form|bootstrap }}
+
+
+        <button class ="btn btn-success" type="submit">Salvar</button>
+
+      </form>
+    </div>
+
+  </div>
+
+{% endblock %}

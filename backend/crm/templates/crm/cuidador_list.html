@@ -30,27 +30,27 @@
           </tr>
         </thead>
         <tbody>
-          {%  for cuidador in cuidadores %}
+          {%  for object in object_list %}
 
             <tr>
-              <td>{{ cuidador.id }} </td>
-              <td>{{ cuidador.nome  }} </td>
-              <td>{{ cuidador.dtanasc }}</td>
-              <td>{{ cuidador.cidade }} </td>
-              <td>{{ cuidador.celular_whatsapp }} </td>
-              <td>{{ cuidador.status }} </td>
-              <td>{{ cuidador.data_inicio }} </td>
-              <td>{{ cuidador.data_fim }} </td>
-              <td>{{ cuidador.regime_contratacao }} </td>
-              <td>{{ cuidador.carga_horaria_semanal }} </td>
-              <td>{{ cuidador.turno_trabalho }} </td>
-              <td>{{ cuidador.salario_atual }} </td>
-              <td>{{ cuidador.adicional }} </td>
-              <td>{{ cuidador.dia_pagamento }} </td>
+              <td>{{ object.id }} </td>
+              <td>{{ object.nome  }} </td>
+              <td>{{ object.dtanasc }}</td>
+              <td>{{ object.cidade }} </td>
+              <td>{{ object.celular_whatsapp }} </td>
+              <td>{{ object.status }} </td>
+              <td>{{ object.data_inicio }} </td>
+              <td>{{ object.data_fim }} </td>
+              <td>{{ object.regime_contratacao }} </td>
+              <td>{{ object.carga_horaria_semanal }} </td>
+              <td>{{ object.turno_trabalho }} </td>
+              <td>{{ object.salario_atual }} </td>
+              <td>{{ object.adicional }} </td>
+              <td>{{ object.dia_pagamento }} </td>
 
               <td>
-                <a class ="btn btn-warning btn-sm" href="{% url 'cuidador_edit' cuidador.id %}">Editar</a>
-                <a class ="btn btn-danger btn-sm" href="{% url 'cuidador_delete' cuidador.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ cuidador.id }} ?  ')">Excluir</a>
+                <a class ="btn btn-warning btn-sm" href="">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
               </td>
             </tr>
           {% endfor %}

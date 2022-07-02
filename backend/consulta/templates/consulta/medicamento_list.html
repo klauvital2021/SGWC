@@ -26,22 +26,22 @@
           </tr>
         </thead>
         <tbody>
-          {%  for medicamento in medicamentos %}
+          {%  for object in object_list %}
 
             <tr>
-              <td>{{ medicamento.id }} </td>
-              <td>{{ medicamento.medicamento_prescrito }} </td>
-              <td>{{ medicamento.principio_ativo }}</td>
-              <td>{{ medicamento.indicacoes }} </td>
-              <td>{{ medicamento.dosagem}} </td>
-              <td>{{ medicamento.forma_uso }} </td>
-              <td>{{ medicamento.data_inicio }} </td>
-              <td>{{ medicamento.data_fim}} </td>
-              <td>{{ medicamento.medico_resp }} </td>
-              <td>{{ medicamento.fornecedor_principal }} </td>
+              <td>{{ object.id }} </td>
+              <td>{{ object.medicamento_prescrito }} </td>
+              <td>{{ object.principio_ativo }}</td>
+              <td>{{ object.indicacoes }} </td>
+              <td>{{ object.dosagem}} </td>
+              <td>{{ object.forma_uso }} </td>
+              <td>{{ object.data_inicio }} </td>
+              <td>{{ object.data_fim}} </td>
+              <td>{{ object.medico_resp }} </td>
+              <td>{{ object.fornecedor_principal }} </td>
               <td>
-                <a class ="btn btn-warning btn-sm" href="{% url 'consulta_edit' medicamento.id %}">Editar</a>
-                <a class ="btn btn-danger btn-sm" href="{% url 'consulta_delete' medicamento.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ medicamento.id }} ?  ')">Excluir</a>
+                <a class ="btn btn-warning btn-sm" href="">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
               </td>
             </tr>
           {% endfor %}

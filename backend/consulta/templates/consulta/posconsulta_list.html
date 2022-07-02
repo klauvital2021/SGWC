@@ -23,21 +23,21 @@
           </tr>
         </thead>
         <tbody>
-          {%  for posconsulta in posconsulta %}
+          {%  for object in object_list %}
 
             <tr>
-              <td>{{ posconsulta.id }} </td>
-              <td>{{ posconsulta.consulta }} </td>
-              <td>{{ posconsulta.acompanhante_resp.nome }}</td>
-              <td>{{ posconsulta.diagnostico }} </td>
-              <td>{{ posconsulta.tratamento}} </td>
-              <td>{{ posconsulta.receita }} </td>
-              <td>{{ posconsulta.observacao}} </td>
+              <td>{{ object.id }} </td>
+              <td>{{ object.consulta }} </td>
+              <td>{{ object.acompanhante_resp.nome }}</td>
+              <td>{{ object.diagnostico }} </td>
+              <td>{{ object.tratamento}} </td>
+              <td>{{ object.receita }} </td>
+              <td>{{ object.observacao}} </td>
 
               <td>
-                <a class ="btn btn-warning btn-sm" href="{% url 'posconsulta_edit' medicamento.id %}">Editar</a>
-                <a class ="btn btn-danger btn-sm" href="{% url 'posconsulta_delete' medicamento.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ posconsulta.id }} ?  ')">Excluir</a>
-                <a class ="btn btn-warning btn-sm" href="{% url 'medicamento_add' posconsulta.dependente.id %}">Medicamentos </a>
+                <a class ="btn btn-warning btn-sm" href="">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
+                <a class ="btn btn-warning btn-sm" href="">Medicamentos </a>
               </td>
             </tr>
           {% endfor %}

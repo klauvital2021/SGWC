@@ -32,21 +32,21 @@
           </tr>
         </thead>
         <tbody>
-          {%  for familia in object_list %}
+          {%  for object in object_list %}
             {% csrf_token %}
             <tr>
-              <td>{{ familia.id}} </td>
-              <td>{{ familia.nome  }} </td>
-              <td>{{ familia.status }}</td>
-              <td>{{ familia.endereco }}</td>
-              <td>{{ familia.bairro }}</td>
-              <td>{{ familia.cidade }} </td>
-              <td>{{ familia.uf }} </td>
-              <td>{{ familia.email}} </td>
+              <td>{{ object.id}} </td>
+              <td>{{ object.nome  }} </td>
+              <td>{{ object.status }}</td>
+              <td>{{ object.endereco }}</td>
+              <td>{{ object.bairro }}</td>
+              <td>{{ object.cidade }} </td>
+              <td>{{ object.uf }} </td>
+              <td>{{ object.email}} </td>
 
               <td>
-                <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' familia.id %}">Editar</a>
-                <a class ="btn btn-danger btn-sm" href="{% url 'familia_delete' familia.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ familia.id }} ?  ')">Excluir</a>
+                <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' object.id %}">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
               </td>
             </tr>
           {% endfor %}

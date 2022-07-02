@@ -49,6 +49,18 @@ class FamiliaCreateView(LRM, CreateView):
     model = Familia
     form_class = FamiliaForm
 
+    def form_valid(self, form):
+        # Pega o objeto Responsavel.
+        user = self.request.user
+        responsavel = Responsavel.objects.get(user=user)
+
+        self.object = form.save()
+
+        # Associa o Responsavel a Família.
+        responsavel.familia = self.object
+        responsavel.save()
+        return super().form_valid(form)
+
 
 class FamiliaUpdateView(LRM, UpdateView):
     model = Familia

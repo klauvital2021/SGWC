@@ -4,23 +4,22 @@
 {% block content %}
   <div class="card">
     <div class="card-body">
-      <h4> Olá Família <B><label>{{ request.session.familia }} {{ request.session.familia_id }}</label></B></h4>
-      <button class ="btn btn-warning" onclick="window.location.href='{% url 'login' %}'"> Voltar </button>
+      <h4> Olá Família <b><label>{{ request.session.familia }} - {{request.session.familia_id }}</label></b></h4>
       <hr>
-      <h5><B>Inserir Família</B></h5>
-      {{ form.non_field_errors }}
-
+      <a href="{% url 'responsavel_list' %}" class ="btn btn-warning">Voltar</a>
       <hr>
-      <form action="{% url 'cadastrar_usuario' %}" method="POST">
+      <h5><b>Família</b></h5>
+      <hr>
+      <form action="." method="POST">
         {% csrf_token %}
-        {{  form|bootstrap }}
 
+        <div class="col-sm-6">
+          {{  form|bootstrap }}
+        </div>
 
         <button class ="btn btn-success" type="submit">Salvar</button>
 
       </form>
     </div>
-
   </div>
-
 {% endblock %}

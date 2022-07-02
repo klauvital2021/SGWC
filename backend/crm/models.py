@@ -30,7 +30,7 @@ class Usuario(Address, Active):
     )
     data_nascimento = models.DateField('Data de Nascimento', blank=True, null=True)  # noqa E501
     rg = models.CharField('RG', max_length=20, blank=True, null=True)  # noqa E501
-    cpf = models.CharField('CPF', max_length=11, blank=True, null=True)  # noqa E501
+    cpf = models.CharField('CPF', max_length=14, blank=True, null=True)  # noqa E501
     celular_whatsapp = models.CharField('WhatsApp', max_length=20, unique=True, blank=True, null=True)  # noqa E501
     celular_recado = models.CharField('Recado', max_length=20, blank=True, null=True)  # noqa E501
     estado_civil = models.CharField('Estado Civil', max_length=1, choices=CIVIL_CHOICES, blank=True, null=True)  # noqa E501
@@ -63,7 +63,7 @@ class Familia(Address, Active):
         return self.nome
 
     def get_absolute_url(self):
-        return reverse("familia_edit", kwargs={"pk": self.id})
+        return reverse('familia_detail', kwargs={'pk': self.pk})
 
 
 class Responsavel(Usuario):
@@ -73,6 +73,9 @@ class Responsavel(Usuario):
         proxy = True
         verbose_name = 'Responsável'
         verbose_name_plural = 'Responsáveis'
+
+    def get_absolute_url(self):
+        return reverse('responsavel_detail', kwargs={'pk': self.pk})
 
 
 class Cuidador(Usuario):
@@ -92,7 +95,7 @@ class Cuidador(Usuario):
         verbose_name_plural = 'Cuidadores'
 
     def get_absolute_url(self):
-        return reverse("cuidador_edit", kwargs={"cuidador_pk": self.id})
+        return reverse('cuidador_detail', kwargs={'pk': self.pk})
 
 
 class Dependente(Usuario):
@@ -100,3 +103,6 @@ class Dependente(Usuario):
 
     class Meta:
         proxy = True
+
+    def get_absolute_url(self):
+        return reverse('dependente_detail', kwargs={'pk': self.pk})

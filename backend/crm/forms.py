@@ -25,7 +25,15 @@ class ResponsavelForm(forms.ModelForm):
             'rg',
             'cpf',
             'celular_whatsapp',
+            'celular_recado',
+            'estado_civil',
+            'nome_conjuge',
+            'nacionalidade',
             'parentesco_do_responsavel',
+            'endereco',
+            'bairro',
+            'cidade',
+            'uf',
         )
 
     def __init__(self, *args, **kwargs):

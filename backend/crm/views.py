@@ -3,25 +3,26 @@ from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 
 from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
 from .models import Cuidador, Dependente, Familia, Responsavel
 
 
-class DependenteListView(ListView):
+class DependenteListView(LRM, ListView):
     model = Dependente
 
 
-class DependenteDetailView(DetailView):
+class DependenteDetailView(LRM, DetailView):
     model = Dependente
 
 
-class DependenteCreateView(CreateView):
+class DependenteCreateView(LRM, CreateView):
     model = Dependente
     form_class = DependenteForm
 
 
-class DependenteUpdateView(UpdateView):
+class DependenteUpdateView(LRM, UpdateView):
     model = Dependente
     form_class = DependenteForm
 
@@ -30,7 +31,7 @@ def dependente_delete(request):
     ...
 
 
-class FamiliaListView(ListView):
+class FamiliaListView(LRM, ListView):
     model = Familia
 
     def get_queryset(self):
@@ -40,16 +41,16 @@ class FamiliaListView(ListView):
         return queryset
 
 
-class FamiliaDetailView(DetailView):
+class FamiliaDetailView(LRM, DetailView):
     model = Familia
 
 
-class FamiliaCreateView(CreateView):
+class FamiliaCreateView(LRM, CreateView):
     model = Familia
     form_class = FamiliaForm
 
 
-class FamiliaUpdateView(UpdateView):
+class FamiliaUpdateView(LRM, UpdateView):
     model = Familia
     form_class = FamiliaForm
 
@@ -58,7 +59,7 @@ def familia_delete(request):
     ...
 
 
-class ResponsavelListView(ListView):
+class ResponsavelListView(LRM, ListView):
     model = Responsavel
 
     def get_queryset(self):
@@ -68,16 +69,16 @@ class ResponsavelListView(ListView):
         return queryset
 
 
-class ResponsavelDetailView(DetailView):
+class ResponsavelDetailView(LRM, DetailView):
     model = Responsavel
 
 
-class ResponsavelCreateView(CreateView):
+class ResponsavelCreateView(LRM, CreateView):
     model = Responsavel
     form_class = ResponsavelForm
 
 
-class ResponsavelUpdateView(UpdateView):
+class ResponsavelUpdateView(LRM, UpdateView):
     model = Responsavel
     form_class = ResponsavelForm
 
@@ -86,64 +87,23 @@ def responsavel_delete(request):
     ...
 
 
-class CuidadorListView(ListView):
+class CuidadorListView(LRM, ListView):
     model = Cuidador
 
 
-class CuidadorDetailView(DetailView):
+class CuidadorDetailView(LRM, DetailView):
     model = Cuidador
 
 
-class CuidadorCreateView(CreateView):
+class CuidadorCreateView(LRM, CreateView):
     model = Cuidador
     form_class = CuidadorForm
 
 
-class CuidadorUpdateView(UpdateView):
+class CuidadorUpdateView(LRM, UpdateView):
     model = Cuidador
     form_class = CuidadorForm
 
 
 def cuidador_delete(request):
     ...
-
-
-def cadastrar_usuario(request):
-    form = FamiliaForm(request.POST or None)
-    if request.POST:
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = User.objects.create_user(
-            # Truque para transformar username em email.
-            username=email,
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            password=password,
-        )
-
-        if form.is_valid():
-            '''
-            Solução para colocar mais de um usuário na mesma família.
-            '''
-            try:
-                nome = form.data.get('nome')
-                familia = Familia.objects.get(nome=nome)
-                print('existe')
-            except Familia.DoesNotExist:
-                familia = form.save()
-                print('novo')
-            except Exception as e:
-                raise e
-            familia.user = user
-            familia.save()
-            return redirect(reverse_lazy('home'))
-
-    context = {
-        'form': form,
-
-    }
-    return render(request, 'portal/familia_add.html', context)

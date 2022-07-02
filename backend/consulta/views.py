@@ -1,23 +1,24 @@
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 
 from .forms import ConsultaForm, MedicamentoForm, PosConsultaForm
 from .models import Consulta, Medicamento, PosConsulta
 
 
-class ConsultaListView(ListView):
+class ConsultaListView(LRM, ListView):
     model = Consulta
 
 
-class ConsultaDetailView(DetailView):
+class ConsultaDetailView(LRM, DetailView):
     model = Consulta
 
 
-class ConsultaCreateView(CreateView):
+class ConsultaCreateView(LRM, CreateView):
     model = Consulta
     form_class = ConsultaForm
 
 
-class ConsultaUpdateView(UpdateView):
+class ConsultaUpdateView(LRM, UpdateView):
     model = Consulta
     form_class = ConsultaForm
 
@@ -26,20 +27,20 @@ def consulta_delete(request):
     ...
 
 
-class PosConsultaListView(ListView):
+class PosConsultaListView(LRM, ListView):
     model = PosConsulta
 
 
-class PosConsultaDetailView(DetailView):
+class PosConsultaDetailView(LRM, DetailView):
     model = PosConsulta
 
 
-class PosConsultaCreateView(CreateView):
+class PosConsultaCreateView(LRM, CreateView):
     model = PosConsulta
     form_class = PosConsultaForm
 
 
-class PosConsultaUpdateView(UpdateView):
+class PosConsultaUpdateView(LRM, UpdateView):
     model = PosConsulta
     form_class = PosConsultaForm
 
@@ -48,20 +49,20 @@ def posconsulta_delete(request):
     ...
 
 
-class MedicamentoListView(ListView):
+class MedicamentoListView(LRM, ListView):
     model = Medicamento
 
 
-class MedicamentoDetailView(DetailView):
+class MedicamentoDetailView(LRM, DetailView):
     model = Medicamento
 
 
-class MedicamentoCreateView(CreateView):
+class MedicamentoCreateView(LRM, CreateView):
     model = Medicamento
     form_class = MedicamentoForm
 
 
-class MedicamentoUpdateView(UpdateView):
+class MedicamentoUpdateView(LRM, UpdateView):
     model = Medicamento
     form_class = MedicamentoForm
 

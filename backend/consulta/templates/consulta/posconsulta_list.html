@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Pós Consulta {% endblock %}
+{% block content %}
+  <div class = "card">
+    <div class="card-body">
+      <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+      <h5> Lista Pós Consultas </h5>
+      <hr>
+      <a class ="btn btn-success" href="{% url 'posconsulta_add' %}">Inserir</a>
+      <table class = "table table-striped">
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Consulta Ref</th>
+            <th>Acompanhente</th>
+            <th>Diagnóstico</th>
+            <th>Tratamento</th>
+            <th>Receita</th>
+            <th>Observações</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {%  for posconsulta in posconsulta %}
+
+            <tr>
+              <td>{{ posconsulta.id }} </td>
+              <td>{{ posconsulta.consulta }} </td>
+              <td>{{ posconsulta.acompanhante_resp.nome }}</td>
+              <td>{{ posconsulta.diagnostico }} </td>
+              <td>{{ posconsulta.tratamento}} </td>
+              <td>{{ posconsulta.receita }} </td>
+              <td>{{ posconsulta.observacao}} </td>
+
+              <td>
+                <a class ="btn btn-warning btn-sm" href="{% url 'posconsulta_edit' medicamento.id %}">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="{% url 'posconsulta_delete' medicamento.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ posconsulta.id }} ?  ')">Excluir</a>
+                <a class ="btn btn-warning btn-sm" href="{% url 'medicamento_add' posconsulta.dependente.id %}">Medicamentos </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

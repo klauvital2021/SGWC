@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block titulo %} Medicamentos {% endblock %}
+{% block content %}
+  <div class = "card">
+    <div class="card-body">
+      <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+      <h5> Lista Medicamentos </h5>
+      <hr>
+      <a class ="btn btn-success" href="{% url 'medicamento_add' %}">Inserir</a>
+      <table class = "table table-striped">
+        <thead>
+
+          <tr>
+            <th>ID</th>
+            <th>Medicamento </th>
+            <th>Principio ativo</th>
+            <th>Indicações</th>
+            <th>Dosagem</th>
+            <th>Uso</th>
+            <th>Inicio</th>
+            <th>Fim</th>
+            <th>Medico</th>
+            <th>Fornecedor</th>
+            <th>Acões</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%  for medicamento in medicamentos %}
+
+            <tr>
+              <td>{{ medicamento.id }} </td>
+              <td>{{ medicamento.medicamento_prescrito }} </td>
+              <td>{{ medicamento.principio_ativo }}</td>
+              <td>{{ medicamento.indicacoes }} </td>
+              <td>{{ medicamento.dosagem}} </td>
+              <td>{{ medicamento.forma_uso }} </td>
+              <td>{{ medicamento.data_inicio }} </td>
+              <td>{{ medicamento.data_fim}} </td>
+              <td>{{ medicamento.medico_resp }} </td>
+              <td>{{ medicamento.fornecedor_principal }} </td>
+              <td>
+                <a class ="btn btn-warning btn-sm" href="{% url 'consulta_edit' medicamento.id %}">Editar</a>
+                <a class ="btn btn-danger btn-sm" href="{% url 'consulta_delete' medicamento.id %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ medicamento.id }} ?  ')">Excluir</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+{% endblock %}

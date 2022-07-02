@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>Nome</td>
+              <td>{{ object.user.get_full_name }}</td>
+            </tr>
+
+            <tr>
+              <td>Família</td>
+              <td>{{ object.familia|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>Data de Nascimento</td>
+              <td>{{ object.data_nascimento|date:"d/m/Y"|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>RG</td>
+              <td>{{ object.rg|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>CPF</td>
+              <td>{{ object.cpf|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>WhatsApp</td>
+              <td>{{ object.celular_whatsapp|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>Celular Recado</td>
+              <td>{{ object.celular_recado|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>Estado Civil</td>
+              <td>{{ object.estado_civil|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>Nome Cônjuge</td>
+              <td>{{ object.nome_conjuge|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>Nacionalidade</td>
+              <td>{{ object.nacionalidade|default:"---" }}</td>
+            </tr>
+
+            <tr>
+              <td>Parentesco</td>
+              <td>{{ object.parentesco_do_responsavel|default:"---" }}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

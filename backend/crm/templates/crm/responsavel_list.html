@@ -22,19 +22,21 @@
             </tr>
           </thead>
           <tbody>
-            {%  for responsavel in object_list %}
+            {%  for object in object_list %}
               {% csrf_token %}
               <tr>
-                <td>{{ responsavel.user.get_full_name }} </td>
-                <td>{{ responsavel.cpf|default:"---" }}</td>
-                <td>{{ responsavel.user.email }} </td>
-                <td>{{ responsavel.data_nascimento|date:"d/m/Y"|default:"---" }} </td>
-                <td>{{ responsavel.cidade|default:"---" }} </td>
-                <td>{{ responsavel.celular_whatsapp|default:"---" }} </td>
-                <td>{{ responsavel.get_parentesco_do_responsavel_display|default:"---" }} </td>
                 <td>
-                  <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' responsavel.id %}">Editar</a>
-                  <a class ="btn btn-danger btn-sm" href="{% url 'responsavel_delete' responsavel.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ responsavel.id }} ?  ')">Excluir</a>
+                  <a href="{{ object.get_absolute_url }}">{{ object.user.get_full_name }}</a>
+                </td>
+                <td>{{ object.cpf|default:"---" }}</td>
+                <td>{{ object.user.email }} </td>
+                <td>{{ object.data_nascimento|date:"d/m/Y"|default:"---" }} </td>
+                <td>{{ object.cidade|default:"---" }} </td>
+                <td>{{ object.celular_whatsapp|default:"---" }} </td>
+                <td>{{ object.get_parentesco_do_object_display|default:"---" }} </td>
+                <td>
+                  <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' object.id %}">Editar</a>
+                  <a class ="btn btn-danger btn-sm" href="{ url 'responsavel_delete' object.id  %}" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
                 </td>
               </td>
               </tr>

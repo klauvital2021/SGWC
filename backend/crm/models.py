@@ -10,7 +10,7 @@ from backend.core.constants import (
 )
 from backend.core.models import Active, Address
 
-from .managers import ResponsavelManager
+from .managers import DependenteManager, ResponsavelManager
 
 
 class Usuario(Address, Active):
@@ -96,4 +96,7 @@ class Cuidador(Usuario):
 
 
 class Dependente(Usuario):
-    ...
+    objects = DependenteManager()
+
+    class Meta:
+        proxy = True

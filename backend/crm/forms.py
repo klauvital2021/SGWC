@@ -3,20 +3,7 @@ from django import forms
 from .models import Cuidador, Dependente, Familia, Responsavel
 
 
-class FamiliaForm(forms.ModelForm):
-
-    class Meta:
-        model = Familia
-        fields = (
-            'nome',
-            'endereco',
-            'bairro',
-            'cidade',
-            'uf',
-        )
-
-
-class ResponsavelForm(forms.ModelForm):
+class CustomUserForm(forms.ModelForm):
     first_name = forms.CharField(
         label='Nome',
         max_length=150,
@@ -30,11 +17,27 @@ class ResponsavelForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Responsavel
+        fields = ('first_name', 'last_name', 'email')
+
+
+class FamiliaForm(forms.ModelForm):
+
+    class Meta:
+        model = Familia
         fields = (
-            'first_name',
-            'last_name',
-            'email',
+            'nome',
+            'endereco',
+            'bairro',
+            'cidade',
+            'uf',
+        )
+
+
+class ResponsavelForm(CustomUserForm):
+
+    class Meta:
+        model = Responsavel
+        fields = CustomUserForm.Meta.fields + (
             'data_nascimento',
             'rg',
             'cpf',
@@ -57,11 +60,35 @@ class ResponsavelForm(forms.ModelForm):
         self.fields['cpf'].widget.attrs.update({'class': 'mask-cpf'})
 
 
-class CuidadorForm(forms.ModelForm):
+class CuidadorForm(CustomUserForm):
 
     class Meta:
         model = Cuidador
-        fields = '__all__'
+        fields = CustomUserForm.Meta.fields + (
+            'data_nascimento',
+            'rg',
+            'cpf',
+            'celular_whatsapp',
+            'celular_recado',
+            'estado_civil',
+            'nome_conjuge',
+            'nacionalidade',
+            'parentesco_do_responsavel',
+            'endereco',
+            'bairro',
+            'cidade',
+            'uf',
+            'data_inicio',
+            'data_fim',
+            'regime_contratacao',
+            'carga_horaria_semanal',
+            'turno_trabalho',
+            'quem_indicou',
+            'salario_atual',
+            'adicional',
+            'dia_pagamento',
+            'observacao',
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

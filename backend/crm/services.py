@@ -16,10 +16,19 @@ def user_create(form):
     return user
 
 
-def responsavel_create(form, user):
+def add_to_group_responsavel(form, user):
     # Adiciona o Responsavel no grupo 'responsavel'.
     group = Group.objects.get(name='responsavel')
     user.groups.add(group)
 
     # Adiciona a permissão can_view_familia.
     add_permissions('responsavel', ['view_familia'])
+
+
+def add_to_group_cuidador(form, user):
+    # Adiciona o Responsavel no grupo 'cuidador'.
+    group = Group.objects.get(name='cuidador')
+    user.groups.add(group)
+
+    # Adiciona a permissão can_view_familia.
+    add_permissions('cuidador', ['view_cuidador'])

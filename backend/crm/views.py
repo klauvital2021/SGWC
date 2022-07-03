@@ -3,7 +3,11 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
 from .models import Cuidador, Dependente, Familia, Responsavel
-from .services import responsavel_create, user_create
+from .services import (
+    add_to_group_cuidador,
+    add_to_group_responsavel,
+    user_create
+)
 
 
 class DependenteListView(LRM, ListView):
@@ -96,7 +100,7 @@ class ResponsavelCreateView(LRM, CreateView):
         self.object.user = user
 
         # Adiciona o Responsavel ao grupo 'responsavel'.
-        responsavel_create(form, user)
+        add_to_group_responsavel(form, user)
 
         # Associa a Familia.
         usuario = self.request.user.usuarios.first()
@@ -127,6 +131,26 @@ class CuidadorDetailView(LRM, DetailView):
 class CuidadorCreateView(LRM, CreateView):
     model = Cuidador
     form_class = CuidadorForm
+
+    def form_valid(self, form):
+        # Cria o User.
+        user = user_create(form)
+
+        self.object = form.save(commit=False)
+
+        # Associa o User ao Cuidador
+        self.object.user = user
+
+        # Adiciona o Cuidador ao grupo 'cuidador'.
+        add_to_group_cuidador(form, user)
+
+        # Associa a Familia.
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        self.object.familia = familia
+        self.object.save()
+
+        return super().form_valid(form)
 
 
 class CuidadorUpdateView(LRM, UpdateView):

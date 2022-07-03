@@ -91,8 +91,12 @@ class FamiliaUpdateView(LRM, UpdateView):
     form_class = FamiliaForm
 
 
-def familia_delete(request):
-    ...
+@login_required
+def familia_delete(request, pk):
+    obj = get_object_or_404(Familia, pk=pk)
+    obj.active = False
+    obj.save()
+    return redirect('familia_list')
 
 
 class ResponsavelListView(LRM, ListView):

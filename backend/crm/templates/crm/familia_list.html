@@ -45,7 +45,16 @@
 
               <td>
                 <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' object.id %}">Editar</a>
-                <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
+                <span
+                  id="linkDeletar"
+                  class ="btn btn-danger btn-sm"
+                  hx-delete="{% url 'familia_delete' object.pk %}"
+                  hx-confirm="Deseja mesmo deletar?"
+                  hx-target="closest tr"
+                  hx-swap="outerHTML swap:500ms"
+                >
+                  Excluir
+                </span>
               </td>
             </tr>
           {% endfor %}
@@ -55,3 +64,18 @@
     </div>
   </div>
 {% endblock %}
+
+{% block js %}
+  <script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    });
+
+    htmx.on("htmx:afterSwap", function(evt) {
+      if (evt.target.id == 'linkDeletar'
+      ) {
+        location.reload();
+      }
+    });
+  </script>
+{% endblock js %}

@@ -40,17 +40,17 @@
                 <td>{{ object.get_parentesco_do_object_display|default:"---" }} </td>
                 <td>
                   <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' object.id %}">Editar</a>
-<span
-                  id="linkDeletar"
-                  class ="btn btn-danger btn-sm"
-                  hx-delete="{% url 'responsavel_delete' object.pk %}"
-                  hx-confirm="Deseja mesmo deletar?"
-                  hx-target="closest tr"
-                  hx-swap="outerHTML swap:500ms"
-                >
-                  Excluir
-                </span>
-                                </td>
+                  <span
+                    id="linkDeletar"
+                    class ="btn btn-danger btn-sm"
+                    hx-delete="{% url 'responsavel_delete' object.pk %}"
+                    hx-confirm="Deseja mesmo deletar?"
+                    hx-target="closest tr"
+                    hx-swap="outerHTML swap:500ms"
+                  >
+                    Excluir
+                  </span>
+                </td>
               </td>
               </tr>
             {% endfor %}

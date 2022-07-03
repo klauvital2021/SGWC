@@ -146,6 +146,10 @@ def responsavel_delete(request):
 class CuidadorListView(LRM, ListView):
     model = Cuidador
 
+    def get_queryset(self):
+        queryset = Familia.objects.filter(active=True)
+        return queryset
+
 
 class CuidadorDetailView(LRM, DetailView):
     model = Cuidador

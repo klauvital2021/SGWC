@@ -11,7 +11,7 @@ def responsavel_principal_create(form, user):
 
     user.save()
 
-    # Adiciona ao grupo 'responsavel'.
+    # Adiciona ao grupo 'responsavel_principal'.
     group = Group.objects.get(name='responsavel_principal')
     user.groups.add(group)
 

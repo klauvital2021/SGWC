@@ -7,7 +7,7 @@ from backend.core.services import has_group
 from backend.crm.models import Responsavel
 
 from .forms import ResponsavelPrincipalForm
-from .services import responsavel_create
+from .services import responsavel_principal_create
 
 
 def responsavel_principal_add(request):
@@ -18,7 +18,7 @@ def responsavel_principal_add(request):
     if request.method == 'POST':
         if form.is_valid():
             user = form.save(commit=False)
-            responsavel_create(form, user)
+            responsavel_principal_create(form, user)
             return redirect(success_url)
 
     context = {'form': form}

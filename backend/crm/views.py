@@ -1,12 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
-from django.contrib.auth.models import User
-from django.db.models import Q
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
 from .models import Cuidador, Dependente, Familia, Responsavel
+from .services import responsavel_create, user_create
 
 
 class DependenteListView(LRM, ListView):
@@ -88,6 +85,26 @@ class ResponsavelDetailView(LRM, DetailView):
 class ResponsavelCreateView(LRM, CreateView):
     model = Responsavel
     form_class = ResponsavelForm
+
+    def form_valid(self, form):
+        # Cria o User.
+        user = user_create(form)
+
+        self.object = form.save(commit=False)
+
+        # Associa o User ao Responsavel
+        self.object.user = user
+
+        # Adiciona o Responsavel ao grupo 'responsavel'.
+        responsavel_create(form, user)
+
+        # Associa a Familia.
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        self.object.familia = familia
+        self.object.save()
+
+        return super().form_valid(form)
 
 
 class ResponsavelUpdateView(LRM, UpdateView):

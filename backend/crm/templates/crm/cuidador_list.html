@@ -16,20 +16,19 @@
         <thead>
 
           <tr>
-            <th>ID</th>
             <th>Nome</th>
-            <th>Dta nasc</th>
+            <th>Data de Nascimento</th>
             <th>Cidade</th>
             <th>Cel/Whats</th>
-            <th>Estatus</th>
+            <th>Ativo</th>
             <th>Admissão</th>
             <th>Demissao</th>
             <th>Contratação</th>
-            <th>CHoraria</th>
+            <th>Carga Horária</th>
             <th>Turno</th>
             <th>Salario</th>
             <th>Adicional</th>
-            <th>Dia de pag</th>
+            <th>Dia de pagamento</th>
             <th>Acões</th>
           </tr>
         </thead>
@@ -37,20 +36,21 @@
           {%  for object in object_list %}
 
             <tr>
-              <td>{{ object.id }} </td>
-              <td>{{ object.nome  }} </td>
-              <td>{{ object.dtanasc }}</td>
-              <td>{{ object.cidade }} </td>
-              <td>{{ object.celular_whatsapp }} </td>
-              <td>{{ object.status }} </td>
-              <td>{{ object.data_inicio }} </td>
-              <td>{{ object.data_fim }} </td>
-              <td>{{ object.regime_contratacao }} </td>
-              <td>{{ object.carga_horaria_semanal }} </td>
-              <td>{{ object.turno_trabalho }} </td>
-              <td>{{ object.salario_atual }} </td>
-              <td>{{ object.adicional }} </td>
-              <td>{{ object.dia_pagamento }} </td>
+              <td>
+                <a href="{{ object.get_absolute_url }}">{{ object }}</a>
+              </td>
+              <td>{{ object.data_nascimento|date:"d/m/Y"|default:"---" }}</td>
+              <td>{{ object.cidade|default:"---" }} </td>
+              <td>{{ object.celular_whatsapp|default:"---" }} </td>
+              <td>{{ object.active|yesno:"Sim,Não" }} </td>
+              <td>{{ object.data_inicio|date:"d/m/Y"|default:"---" }} </td>
+              <td>{{ object.data_fim|date:"d/m/Y"|default:"---" }} </td>
+              <td>{{ object.get_regime_contratacao_display|default:"---" }} </td>
+              <td>{{ object.carga_horaria_semanal|default:"---" }} </td>
+              <td>{{ object.get_turno_trabalho_display|default:"---" }} </td>
+              <td>{{ object.salario_atual|default:"---" }} </td>
+              <td>{{ object.adicional|default:"---" }} </td>
+              <td>{{ object.dia_pagamento|default:"---" }} </td>
 
               <td>
                 <a class ="btn btn-warning btn-sm" href="">Editar</a>

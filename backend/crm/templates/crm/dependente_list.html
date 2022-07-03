@@ -17,12 +17,11 @@
         <thead>
 
           <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Data nascimento</th>
             <th>Cidade</th>
             <th>Telefone</th>
-            <th>Estatus</th>
+            <th>Ativo</th>
             <th>Nome do Convênio</th>
             <th>Contato do Convênio</th>
             <th>Acões</th>
@@ -32,16 +31,14 @@
           {%  for object in object_list %}
 
             <tr>
-              <td>{{ object.id }} </td>
-              <td>{{ object.nome  }} </td>
-              <td>{{ object.dtanasc }}</td>
-              <td>{{ object.cidade }} </td>
-              <td>{{ object.celular_whatsapp }} </td>
-              <td>{{ object.status }} </td>
-              <td>{{ object.convenio_medico }} </td>
-              <td>{{ object.contato_fone_convenio }} </td>
-
-
+              <td>
+                <a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
+              <td>{{ object.data_nascimento|date:"d/m/Y"|default:"---" }}</td>
+              <td>{{ object.cidade|default:"---" }} </td>
+              <td>{{ object.celular_whatsapp|default:"---" }} </td>
+              <td>{{ object.active|yesno:"Sim,Não" }} </td>
+              <td>{{ object.dependente_convenio_medico }} </td>
+              <td>{{ object.dependente_contato_fone_convenio }} </td>
               <td>
                 <a class ="btn btn-warning btn-sm" href="{% url 'dependente_edit' object.id %}">Editar</a>
                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>

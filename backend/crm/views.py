@@ -51,8 +51,12 @@ class DependenteUpdateView(LRM, UpdateView):
     form_class = DependenteForm
 
 
-def dependente_delete(request):
-    ...
+@login_required
+def dependente_delete(request, pk):
+    obj = get_object_or_404(Dependente, pk=pk)
+    obj.active = False
+    obj.save()
+    return redirect('dependente_list')
 
 
 class FamiliaListView(LRM, ListView):

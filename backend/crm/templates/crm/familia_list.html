@@ -10,10 +10,12 @@
       <h4> Olá Família <B><label>{{ request.session.familia }}</label></B></h4>
       <h5>
         Lista Famílias
-        <a
-          class ="btn btn-success"
-          href="{% url 'familia_add' %}"
-        >Adicionar</a>
+        {% if not minha_familia %}
+          <a
+            class ="btn btn-success"
+            href="{% url 'familia_add' %}"
+          >Adicionar</a>
+        {% endif %}
       </h5>
 
       <table class = "table table-striped">

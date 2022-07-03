@@ -80,6 +80,19 @@ class FamiliaListView(LRM, ListView):
         queryset = Familia.objects.filter(nome=familia, active=True)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        '''
+        Verifica se já existe uma família.
+        '''
+        context = super().get_context_data(**kwargs)
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        if familia:
+            context['minha_familia'] = True
+        else:
+            context['minha_familia'] = False
+        return context
+
 
 class FamiliaDetailView(LRM, DetailView):
     model = Familia
@@ -93,6 +106,12 @@ class FamiliaCreateView(LRM, CreateView):
         # Pega o objeto Responsavel.
         user = self.request.user
         responsavel = Responsavel.objects.get(user=user)
+
+        # Verifica se já existe uma família.
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        if familia:
+            return redirect('familia_list')
 
         self.object = form.save()
 

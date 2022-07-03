@@ -73,7 +73,6 @@ class CuidadorForm(CustomUserForm):
             'estado_civil',
             'nome_conjuge',
             'nacionalidade',
-            'parentesco_do_responsavel',
             'endereco',
             'bairro',
             'cidade',

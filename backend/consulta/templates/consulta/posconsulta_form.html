@@ -6,12 +6,12 @@
     <div class="card-body">
       <h4> Olá Família <B><label>{{ request.session.familia }}- {{request.session.familia_id}} </label></B></h4>
       <hr>
-      <button class ="btn btn-warning" onclick="window.location.href='{% url 'consultas' %}'">Voltar</button>
+      <button class ="btn btn-warning" onclick="window.location.href=''">Voltar</button>
       <hr>
-      <h5><b>Inserir Pós Consulta</b></h5>
+      <h5><b>Pós Consulta</b></h5>
       <hr>
 
-      <form action="." method="POST">
+      <form action="." method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|bootstrap }}
 

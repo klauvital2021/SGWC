@@ -28,6 +28,7 @@ python manage.py createsuperuser --username="admin" --email=""
 python manage.py cria_grupos
 ```
 
+
 ## Diagramas ER
 
 ```

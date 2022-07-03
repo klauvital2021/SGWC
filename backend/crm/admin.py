@@ -10,6 +10,7 @@ class CuidadorAdmin(admin.ModelAdmin):
         'familia',
         'data_inicio',
         'data_fim',
+        'active'
     )
     # list_display_links = ('dependente',)
     search_fields = (
@@ -18,7 +19,7 @@ class CuidadorAdmin(admin.ModelAdmin):
         'usuario__user__email',
         'familia__nome',
     )
-    # list_filter = ('type',)
+    list_filter = ('active',)
     # date_hierarchy = 'created'
 
 
@@ -29,6 +30,7 @@ class DependenteAdmin(admin.ModelAdmin):
         'familia',
         'rg',
         'cpf',
+        'active'
     )
     # list_display_links = ('dependente',)
     search_fields = (
@@ -36,7 +38,7 @@ class DependenteAdmin(admin.ModelAdmin):
         'usuario__user__last_name',
         'usuario__user__email',
     )
-    # list_filter = ('type',)
+    list_filter = ('active',)
     # date_hierarchy = 'created'
 
 
@@ -44,6 +46,7 @@ class DependenteAdmin(admin.ModelAdmin):
 class FamiliaAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
+        'active'
     )
     # list_display_links = ('dependente',)
     search_fields = (
@@ -53,7 +56,7 @@ class FamiliaAdmin(admin.ModelAdmin):
         'usuario__user__email',
         'familia__nome',
     )
-    # list_filter = ('type',)
+    list_filter = ('active',)
     # date_hierarchy = 'created'
 
 
@@ -64,6 +67,7 @@ class ResponsavelAdmin(admin.ModelAdmin):
         'familia',
         'rg',
         'cpf',
+        'active'
     )
     # list_display_links = ('dependente',)
     search_fields = (
@@ -72,5 +76,5 @@ class ResponsavelAdmin(admin.ModelAdmin):
         'usuario__user__email',
         'familia__nome',
     )
-    # list_filter = ('type',)
+    list_filter = ('active',)
     # date_hierarchy = 'created'

@@ -22,7 +22,7 @@ familia_urlpatterns = [
 
 responsavel_urlpatterns = [
     path('', v.ResponsavelListView.as_view(), name='responsavel_list'),  # noqa E501
-    path('e<int:pk>/', v.ResponsavelDetailView.as_view(), name='responsavel_detail'),  # noqa E501
+    path('<int:pk>/', v.ResponsavelDetailView.as_view(), name='responsavel_detail'),  # noqa E501
     path('add/', v.ResponsavelCreateView.as_view(), name='responsavel_add'),  # noqa E501
     path('edit/<int:pk>/', v.ResponsavelUpdateView.as_view(), name='responsavel_edit'),  # noqa E501
     path('delete/<int:pk>/', v.responsavel_delete, name='responsavel_delete'),  # noqa E501

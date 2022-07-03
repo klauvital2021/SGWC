@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
@@ -179,5 +181,9 @@ class CuidadorUpdateView(LRM, UpdateView):
     form_class = CuidadorForm
 
 
-def cuidador_delete(request):
-    ...
+@login_required
+def cuidador_delete(request, pk):
+    obj = get_object_or_404(Cuidador, pk=pk)
+    obj.active = False
+    obj.save()
+    return redirect('cuidador_list')

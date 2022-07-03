@@ -109,7 +109,8 @@ class ResponsavelListView(LRM, ListView):
     def get_queryset(self):
         usuario = self.request.user.usuarios.first()
         familia = usuario.familia
-        queryset = Responsavel.objects.filter(familia__nome=familia)
+        queryset = Responsavel.objects.filter(
+            familia__nome=familia, active=True)
         return queryset
 
 

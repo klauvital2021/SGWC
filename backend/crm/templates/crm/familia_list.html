@@ -20,14 +20,12 @@
         <thead>
 
           <tr>
-            <th>ID</th>
             <th>Nome</th>
-            <th>Status</th>
             <th>Endereço</th>
             <th>Bairro</th>
             <th>Cidade</th>
             <th>UF</th>
-            <th>Email</th>
+            <th>Ativo</th>
             <th>Acões</th>
           </tr>
         </thead>
@@ -35,14 +33,14 @@
           {%  for object in object_list %}
             {% csrf_token %}
             <tr>
-              <td>{{ object.id}} </td>
-              <td>{{ object.nome  }} </td>
-              <td>{{ object.status }}</td>
+              <td>
+                <a href="{{ object.get_absolute_url }}">{{ object.nome }}</a>
+              </td>
               <td>{{ object.endereco }}</td>
               <td>{{ object.bairro }}</td>
               <td>{{ object.cidade }} </td>
-              <td>{{ object.uf }} </td>
-              <td>{{ object.email}} </td>
+              <td>{{ object.get_uf_display }} </td>
+              <td>{{ object.active|yesno:"Sim,Não" }}</td>
 
               <td>
                 <a class ="btn btn-warning btn-sm" href="{% url 'familia_edit' object.id %}">Editar</a>

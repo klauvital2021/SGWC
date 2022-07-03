@@ -98,12 +98,11 @@ class CuidadorForm(CustomUserForm):
         self.fields['data_fim'].widget.attrs.update({'class': 'mask-date'})
 
 
-class DependenteForm(forms.ModelForm):
+class DependenteForm(CustomUserForm):
 
     class Meta:
         model = Dependente
-        fields = [
-            'familia',
+        fields = CustomUserForm.Meta.fields + (
             'data_nascimento',
             'rg',
             'cpf',
@@ -112,11 +111,14 @@ class DependenteForm(forms.ModelForm):
             'estado_civil',
             'nome_conjuge',
             'nacionalidade',
-            'parentesco_do_responsavel',
+            'endereco',
+            'bairro',
+            'cidade',
+            'uf',
             'dependente_convenio_medico',
             'dependente_contato_fone_convenio',
             'dependente_contato_endereco_convenio',
-        ]
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

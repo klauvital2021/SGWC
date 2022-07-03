@@ -5,6 +5,7 @@ from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
 from .models import Cuidador, Dependente, Familia, Responsavel
 from .services import (
     add_to_group_cuidador,
+    add_to_group_dependente,
     add_to_group_responsavel,
     user_create
 )
@@ -21,6 +22,26 @@ class DependenteDetailView(LRM, DetailView):
 class DependenteCreateView(LRM, CreateView):
     model = Dependente
     form_class = DependenteForm
+
+    def form_valid(self, form):
+        # Cria o User.
+        user = user_create(form)
+
+        self.object = form.save(commit=False)
+
+        # Associa o User ao Dependente
+        self.object.user = user
+
+        # Adiciona o Dependente ao grupo 'dependente'.
+        add_to_group_dependente(form, user)
+
+        # Associa a Familia.
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        self.object.familia = familia
+        self.object.save()
+
+        return super().form_valid(form)
 
 
 class DependenteUpdateView(LRM, UpdateView):

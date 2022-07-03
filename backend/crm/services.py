@@ -21,14 +21,23 @@ def add_to_group_responsavel(form, user):
     group = Group.objects.get(name='responsavel')
     user.groups.add(group)
 
-    # Adiciona a permissão can_view_familia.
-    add_permissions('responsavel', ['view_familia'])
+    # Adiciona a permissão view_familia e view_responsavel.
+    add_permissions('responsavel', ['view_familia', 'view_responsavel'])
 
 
 def add_to_group_cuidador(form, user):
-    # Adiciona o Responsavel no grupo 'cuidador'.
+    # Adiciona o Cuidador no grupo 'cuidador'.
     group = Group.objects.get(name='cuidador')
     user.groups.add(group)
 
-    # Adiciona a permissão can_view_familia.
-    add_permissions('cuidador', ['view_cuidador'])
+    # Adiciona a permissão view_familia e view_cuidador.
+    add_permissions('cuidador', ['view_familia', 'view_cuidador'])
+
+
+def add_to_group_dependente(form, user):
+    # Adiciona o Dependente no grupo 'dependente'.
+    group = Group.objects.get(name='dependente')
+    user.groups.add(group)
+
+    # Adiciona a permissão view_familia e view_dependente.
+    add_permissions('dependente', ['view_familia', 'view_dependente'])

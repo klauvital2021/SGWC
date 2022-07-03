@@ -4,22 +4,22 @@
 {% block content %}
   <div class="card">
     <div class="card-body">
-      <h4> Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+      <h4> Olá Família <b><label>{{ request.session.familia }} - {{request.session.familia_id }}</label></b></h4>
       <hr>
-      <button class ="btn btn-warning" onclick="window.location.href='{% url 'dependentes' %}'">Voltar</button>
+      <a href="{% url 'dependente_list' %}" class ="btn btn-warning">Voltar</a>
       <hr>
-      <h5> Inserir Dependente </h5>
-
+      <h5><b>Dependente</b></h5>
       <hr>
-      <form action="{% url 'dependente_add' %}" method="post">
+      <form action="." method="POST">
         {% csrf_token %}
-        {{  form|bootstrap }}
+
+        <div class="col-sm-6">
+          {{  form|bootstrap }}
+        </div>
 
         <button class ="btn btn-success" type="submit">Salvar</button>
 
       </form>
     </div>
-
   </div>
-
 {% endblock %}

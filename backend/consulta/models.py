@@ -42,6 +42,9 @@ class Consulta(models.Model):
     def __str__(self):
         return f'{self.pk}'
 
+    def get_absolute_url(self):
+        return reverse("consulta_detail", kwargs={"pk": self.id})
+
 
 class PosConsulta(models.Model):
     dependente = models.ForeignKey(
@@ -68,6 +71,9 @@ class PosConsulta(models.Model):
 
     def get_upload_to(instance, filename):
         return instance.get_upload_to(filename)
+
+    def get_absolute_url(self):
+        return reverse("posconsulta_detail", kwargs={"pk": self.id})
 
 
 class Medicamento(models.Model):
@@ -100,4 +106,4 @@ class Medicamento(models.Model):
         return f'{self.medicamento_prescrito}'
 
     def get_absolute_url(self):
-        return reverse("medicamento_edit", kwargs={"pk": self.id})
+        return reverse("medicamento_detail", kwargs={"pk": self.id})

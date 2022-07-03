@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        {% if object.receita %}
+          <img src="{{ object.receita.url }}" alt="{{ object.receita.url }}">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

@@ -11,7 +11,7 @@
       <h5><b>Inserir Medicamento</b></h5>
       <hr>
 
-      <form action="{% url 'consulta_add' %}" method="post">
+      <form action="." method="POST">
         {% csrf_token %}
         {{ form|bootstrap }}
 

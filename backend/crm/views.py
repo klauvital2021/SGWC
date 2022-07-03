@@ -25,7 +25,9 @@ class DependenteListView(LRM, ListView):
     model = Dependente
 
     def get_queryset(self):
-        queryset = Dependente.objects.filter(active=True)
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        queryset = Dependente.objects.filter(familia__nome=familia, active=True)  # noqa E501
         return queryset
 
 

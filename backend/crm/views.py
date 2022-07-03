@@ -65,7 +65,7 @@ class FamiliaListView(LRM, ListView):
     def get_queryset(self):
         usuario = self.request.user.usuarios.first()
         familia = usuario.familia
-        queryset = Familia.objects.filter(nome=familia)
+        queryset = Familia.objects.filter(nome=familia, active=True)
         return queryset
 
 

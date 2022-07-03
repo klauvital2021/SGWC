@@ -3,7 +3,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .forms import CuidadorForm, DependenteForm, FamiliaForm, ResponsavelForm
+from .forms import (
+    CuidadorAddForm,
+    CuidadorUpdateForm,
+    DependenteAddForm,
+    DependenteUpdateForm,
+    FamiliaForm,
+    ResponsavelAddForm,
+    ResponsavelUpdateForm
+)
 from .models import Cuidador, Dependente, Familia, Responsavel
 from .services import (
     add_to_group_cuidador,
@@ -16,6 +24,10 @@ from .services import (
 class DependenteListView(LRM, ListView):
     model = Dependente
 
+    def get_queryset(self):
+        queryset = Dependente.objects.filter(active=True)
+        return queryset
+
 
 class DependenteDetailView(LRM, DetailView):
     model = Dependente
@@ -23,7 +35,7 @@ class DependenteDetailView(LRM, DetailView):
 
 class DependenteCreateView(LRM, CreateView):
     model = Dependente
-    form_class = DependenteForm
+    form_class = DependenteAddForm
 
     def form_valid(self, form):
         # Cria o User.
@@ -48,7 +60,7 @@ class DependenteCreateView(LRM, CreateView):
 
 class DependenteUpdateView(LRM, UpdateView):
     model = Dependente
-    form_class = DependenteForm
+    form_class = DependenteUpdateForm
 
 
 @login_required
@@ -109,8 +121,7 @@ class ResponsavelListView(LRM, ListView):
     def get_queryset(self):
         usuario = self.request.user.usuarios.first()
         familia = usuario.familia
-        queryset = Responsavel.objects.filter(
-            familia__nome=familia, active=True)
+        queryset = Responsavel.objects.filter(familia__nome=familia, active=True)  # noqa E501
         return queryset
 
 
@@ -120,7 +131,7 @@ class ResponsavelDetailView(LRM, DetailView):
 
 class ResponsavelCreateView(LRM, CreateView):
     model = Responsavel
-    form_class = ResponsavelForm
+    form_class = ResponsavelAddForm
 
     def form_valid(self, form):
         # Cria o User.
@@ -145,7 +156,7 @@ class ResponsavelCreateView(LRM, CreateView):
 
 class ResponsavelUpdateView(LRM, UpdateView):
     model = Responsavel
-    form_class = ResponsavelForm
+    form_class = ResponsavelUpdateForm
 
 
 @login_required
@@ -160,7 +171,7 @@ class CuidadorListView(LRM, ListView):
     model = Cuidador
 
     def get_queryset(self):
-        queryset = Familia.objects.filter(active=True)
+        queryset = Cuidador.objects.filter(active=True)
         return queryset
 
 
@@ -170,7 +181,7 @@ class CuidadorDetailView(LRM, DetailView):
 
 class CuidadorCreateView(LRM, CreateView):
     model = Cuidador
-    form_class = CuidadorForm
+    form_class = CuidadorAddForm
 
     def form_valid(self, form):
         # Cria o User.
@@ -195,7 +206,7 @@ class CuidadorCreateView(LRM, CreateView):
 
 class CuidadorUpdateView(LRM, UpdateView):
     model = Cuidador
-    form_class = CuidadorForm
+    form_class = CuidadorUpdateForm
 
 
 @login_required

@@ -139,8 +139,12 @@ class ResponsavelUpdateView(LRM, UpdateView):
     form_class = ResponsavelForm
 
 
-def responsavel_delete(request):
-    ...
+@login_required
+def responsavel_delete(request, pk):
+    obj = get_object_or_404(Responsavel, pk=pk)
+    obj.active = False
+    obj.save()
+    return redirect('responsavel_list')
 
 
 class CuidadorListView(LRM, ListView):

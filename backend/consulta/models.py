@@ -49,7 +49,8 @@ class Consulta(models.Model):
 class PosConsulta(models.Model):
     consulta = models.ForeignKey(
         Consulta,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='pos_consultas'
     )
     acompanhante_responsavel = models.ForeignKey(
         Responsavel,

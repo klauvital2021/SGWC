@@ -47,7 +47,13 @@
               <td>
                 <a class ="btn btn-warning btn-sm" href="{% url 'consulta_edit' object.pk %}">Editar</a>
               </td>
-              <td><a class="btn btn-success btn-sm" href="{% url 'posconsulta_add' %}">Pós Consulta</a></td>
+              <td>
+                {% if object.pos_consultas.all %}
+                  <a class="btn btn-primary btn-sm" href="{% url 'posconsulta_list' %}">Pós Consulta</a>
+                {% else %}
+                  <a class="btn btn-success btn-sm" href="{% url 'posconsulta_add' %}">Criar Pós Consulta</a>
+                {% endif %}
+              </td>
             </tr>
           {% endfor %}
         </tbody>

@@ -33,17 +33,17 @@
           {%  for object in object_list %}
 
             <tr>
-              <td><a href="{{ object.get_absolute_url }}">{{ object.data_consulta }}</a></td>
+              <td><a href="{{ object.get_absolute_url }}">{{ object.data_consulta|date:"d/m/Y" }}</a></td>
 
               <td>{{ object.hora }}</td>
-              <td>{{ object.local }} </td>
-              <td>{{ object.get_especialidade_display}} </td>
-              <td>{{ object.nome_especialista}} </td>
-              <td>{{ object.fone_contato }} </td>
-              <td>{{ object.get_atendimento_display }} </td>
-              <td>{{ object.motivo_consulta}} </td>
-              <td>{{ object.acompanhante_responsavel }} </td>
-              <td>{{ object.cancelamento }} </td>
+              <td>{{ object.local|default:"---" }} </td>
+              <td>{{ object.get_especialidade_display|default:"---" }} </td>
+              <td>{{ object.nome_especialista|default:"---" }} </td>
+              <td>{{ object.fone_contato|default:"---" }} </td>
+              <td>{{ object.get_atendimento_display|default:"---" }} </td>
+              <td>{{ object.motivo_consulta|default:"---" }} </td>
+              <td>{{ object.acompanhante_responsavel|default:"---" }} </td>
+              <td>{{ object.cancelamento|default:"---" }} </td>
               <td>
                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>

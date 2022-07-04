@@ -45,8 +45,7 @@
               <td>{{ object.acompanhante_responsavel|default:"---" }} </td>
               <td>{{ object.cancelamento|default:"---" }} </td>
               <td>
-                <a class ="btn btn-warning btn-sm" href="">Editar</a>
-                <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
+                <a class ="btn btn-warning btn-sm" href="{% url 'consulta_edit' object.pk %}">Editar</a>
               </td>
               <td><a class="btn btn-success btn-sm" href="{% url 'posconsulta_add' %}">Pós Consulta</a></td>
             </tr>

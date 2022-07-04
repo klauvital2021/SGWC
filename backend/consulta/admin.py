@@ -12,7 +12,7 @@ class ConsultaAdmin(admin.ModelAdmin):
         'hora',
         'especialidade',
     )
-    list_display_links = ('dependente',)
+    # list_display_links = ('dependente',)
     # search_fields = ('name',)
     # list_filter = ('type',)
     # date_hierarchy = 'created'

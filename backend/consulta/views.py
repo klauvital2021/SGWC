@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-
 from .forms import ConsultaForm, MedicamentoForm, PosConsultaForm
 from .models import Consulta, Medicamento, PosConsulta
 
@@ -16,29 +15,6 @@ class ConsultaDetailView(LRM, DetailView):
 class ConsultaCreateView(LRM, CreateView):
     model = Consulta
     form_class = ConsultaForm
-
-
-'''
-    def form_valid(self, form):
-        # Cria o User.
-        user = user_create(form)
-
-        self.object = form.save(commit=False)
-
-        # Associa o User ao Dependente
-        self.object.user = user
-
-        # Adiciona o Dependente ao grupo 'dependente'.
-        add_to_group_consulta(form, user)
-
-        # Associa a Familia.
-        usuario = self.request.user.usuarios.first()
-        familia = usuario.familia
-        self.object.familia = familia
-        self.object.save()
-
-        return super().form_valid(form)
-'''
 
 
 class ConsultaUpdateView(LRM, UpdateView):
@@ -84,6 +60,7 @@ def posconsulta_delete(request):
 
 class MedicamentoListView(LRM, ListView):
     model = Medicamento
+    form_class = MedicamentoForm
 
 
 class MedicamentoDetailView(LRM, DetailView):

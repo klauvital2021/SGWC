@@ -1,7 +1,5 @@
 from django import forms
-
-from backend.crm.models import Responsavel, Usuario
-
+from backend.crm.models import Responsavel, Usuario, Dependente, Familia
 from .models import Consulta, Medicamento, PosConsulta
 
 
@@ -30,7 +28,7 @@ class PosConsultaForm(forms.ModelForm):
         familia = usuario.familia
         queryset = Responsavel.objects.filter(familia=familia)
         self.fields['acompanhante_responsavel'].queryset = queryset
-
+        #return redirect('posconsulta_detail')
 
 class MedicamentoForm(forms.ModelForm):
 
@@ -38,9 +36,14 @@ class MedicamentoForm(forms.ModelForm):
         model = Medicamento
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        '''
+        usuario = Usuario.objects.filter(user=user).first()
+        familia = usuario.familia
+        queryset = Dependente.objects.filter(familia=familia)
+        self.fields['dependente'].queryset = queryset
+        '''
         self.fields['data_inicio'].widget.attrs.update({'class': 'mask-date'})
         self.fields['data_fim'].widget.attrs.update({'class': 'mask-date'})
-        self.fields['hora'].widget.attrs.update({'class': 'mask-hora'})
+

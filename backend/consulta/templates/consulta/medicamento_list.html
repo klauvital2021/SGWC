@@ -9,12 +9,12 @@
       <h4> <B><label>{{ user.get_full_name }} -  Familia {{ familia}}</label></B></h4>
       <h5> Lista Medicamentos </h5>
       <hr>
-      <a class ="btn btn-success" href="{% url 'medicamento_add' %}">Inserir</a>
+      <a class ="btn btn-success" href="{% url 'medicamento_add' %}">Adicionar</a>
       <table class = "table table-striped">
         <thead>
 
           <tr>
-            <th>ID</th>
+
             <th>Medicamento </th>
             <th>Principio ativo</th>
             <th>Indicações</th>
@@ -31,16 +31,16 @@
           {%  for object in object_list %}
 
             <tr>
-              <td>{{ object.id }} </td>
-              <td>{{ object.medicamento_prescrito }} </td>
+
+              <td> <a href="{{ object.get_absolute_url }}">{{ object.medicamento_prescrito }}</a> </td>
               <td>{{ object.principio_ativo }}</td>
               <td>{{ object.indicacoes }} </td>
               <td>{{ object.dosagem}} </td>
               <td>{{ object.forma_uso }} </td>
               <td>{{ object.data_inicio }} </td>
               <td>{{ object.data_fim}} </td>
-              <td>{{ object.medico_resp }} </td>
-              <td>{{ object.fornecedor_principal }} </td>
+              <td>{{ object.medico_responsavel }} </td>
+              <td>{{ object.get_fornecedor_principal_display }} </td>
               <td>
                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>

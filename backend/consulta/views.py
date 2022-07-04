@@ -4,6 +4,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from .forms import ConsultaForm, MedicamentoForm, PosConsultaForm
 from .models import Consulta, Medicamento, PosConsulta
 
+
 class ConsultaListView(LRM, ListView):
     model = Consulta
 
@@ -15,6 +16,8 @@ class ConsultaDetailView(LRM, DetailView):
 class ConsultaCreateView(LRM, CreateView):
     model = Consulta
     form_class = ConsultaForm
+
+
 '''
     def form_valid(self, form):
         # Cria o User.
@@ -37,6 +40,7 @@ class ConsultaCreateView(LRM, CreateView):
         return super().form_valid(form)
 '''
 
+
 class ConsultaUpdateView(LRM, UpdateView):
     model = Consulta
     form_class = ConsultaForm
@@ -48,7 +52,6 @@ def consulta_delete(request):
 
 class PosConsultaListView(LRM, ListView):
     model = PosConsulta
-
 
 
 class PosConsultaDetailView(LRM, DetailView):

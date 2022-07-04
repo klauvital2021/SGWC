@@ -1,4 +1,5 @@
 from django.urls import include, path
+
 from backend.consulta import views as v
 
 consulta_urlpatterns = [

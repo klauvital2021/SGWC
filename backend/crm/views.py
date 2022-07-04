@@ -43,6 +43,7 @@ class DependenteListView(LRM, ListView):
             context['minha_familia'] = False
         return context
 
+
 class DependenteDetailView(LRM, DetailView):
     model = Dependente
 
@@ -148,6 +149,8 @@ def familia_delete(request, pk):
     return redirect('familia_list')
 
 # crm/views.py
+
+
 class ResponsavelListView(LRM, ListView):
     model = Responsavel
 
@@ -159,6 +162,7 @@ class ResponsavelListView(LRM, ListView):
         else:
             queryset = Responsavel.objects.filter(active=True)
         return queryset
+
 
 class ResponsavelDetailView(LRM, DetailView):
     model = Responsavel

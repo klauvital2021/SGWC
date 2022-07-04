@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
 from backend.crm.models import Usuario
 
 
@@ -12,4 +13,3 @@ def home(request):
     else:
         context = {}
     return render(request, 'home.html', context)
-

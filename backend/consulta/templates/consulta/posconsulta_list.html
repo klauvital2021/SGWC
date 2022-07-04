@@ -6,7 +6,7 @@
 {% block content %}
   <div class = "card">
     <div class="card-body">
-         <h4> <B><label>{{ user.get_full_name }} -  Familia {{ familia}}</label></B></h4>
+      <h4> <B><label>{{ user.get_full_name }} -  Familia {{ familia}}</label></B></h4>
       <h5> Lista Pós Consultas </h5>
       <hr>
       <a class ="btn btn-success" href="{% url 'posconsulta_add' %}">Inserir</a>

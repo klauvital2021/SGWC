@@ -39,13 +39,11 @@ class Consulta(models.Model):
     class Meta:
         ordering = ('data_consulta', 'hora')
 
-
     def __str__(self):
         return f'{self.pk} - {self.dependente} - {self.data_consulta} - {self.hora} - {self.nome_especialista} - {self.especialidade}'
 
     def get_absolute_url(self):
         return reverse("consulta_detail", kwargs={"pk": self.id})
-
 
 
 class PosConsulta(models.Model):

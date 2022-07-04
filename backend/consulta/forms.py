@@ -14,6 +14,7 @@ class ConsultaForm(forms.ModelForm):
         self.fields['data_consulta'].widget.attrs.update({'class': 'mask-date'})   # noqa E501
         self.fields['hora'].widget.attrs.update({'class': 'mask-hora'})
 
+
 class PosConsultaForm(forms.ModelForm):
 
     class Meta:

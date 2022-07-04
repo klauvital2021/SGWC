@@ -22,10 +22,9 @@ class ConsultaAdmin(admin.ModelAdmin):
 class PosConsultaAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
-        'dependente',
         'consulta',
     )
-    list_display_links = ('dependente',)
+    # list_display_links = ('dependente',)
     # search_fields = ('name',)
     # list_filter = ('type',)
     # date_hierarchy = 'created'

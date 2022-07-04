@@ -72,6 +72,11 @@ class PosConsultaUpdateView(LRM, UpdateView):
     model = PosConsulta
     form_class = PosConsultaForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
 
 def posconsulta_delete(request):
     ...

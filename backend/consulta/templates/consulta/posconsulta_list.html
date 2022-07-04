@@ -37,7 +37,7 @@
               <td>{{ object.observacao}} </td>
 
               <td>
-                <a class ="btn btn-warning btn-sm" href="">Editar</a>
+                <a class ="btn btn-warning btn-sm" href="{% url 'posconsulta_edit' object.pk %}">Editar</a>
                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
                 <a class ="btn btn-warning btn-sm" href="">Medicamentos </a>
               </td>

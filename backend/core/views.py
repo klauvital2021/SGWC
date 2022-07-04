@@ -4,6 +4,9 @@ from django.shortcuts import render
 from backend.crm.models import Usuario
 
 
+from backend.crm.models import Usuario
+
+
 @login_required
 def home(request):
     user = request.user

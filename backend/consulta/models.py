@@ -40,7 +40,7 @@ class Consulta(models.Model):
         ordering = ('data_consulta', 'hora')
 
     def __str__(self):
-        return f'{self.pk}'
+        return f'{self.pk} - {self.dependente}'
 
     def get_absolute_url(self):
         return reverse("consulta_detail", kwargs={"pk": self.id})
@@ -67,7 +67,7 @@ class PosConsulta(models.Model):
     observacao = models.TextField('Tratamento', blank=True, null=True)  # noqa E501
 
     def __str__(self):
-        return f'{self.pk}'
+        return f'{self.pk} - {self.dependente}'
 
     def get_upload_to(instance, filename):
         return instance.get_upload_to(filename)

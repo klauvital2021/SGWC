@@ -2,8 +2,11 @@
 
 {% block content %}
   <div class="container">
+     <h4>Detalhes da Família </h4>
     <div class="card">
+
       <div class="card-body">
+
         <table class="table">
           <tbody>
             <tr>
@@ -35,5 +38,6 @@
         </table>
       </div>
     </div>
+   <a class ="btn btn-success" href="{% url 'familia_list' %}" >Voltar</a>
   </div>
 {% endblock content %}

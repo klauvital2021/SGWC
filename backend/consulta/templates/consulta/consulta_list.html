@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+
 {% block titulo %} Consultas {% endblock %}
+
 {% block content %}
   <div class = "card">
     <div class="card-body">
-      <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+          <h4> <B><label>{{ user.get_full_name }} -  Familia {{ familia}}</label></B></h4>
       <h5> Lista Consultas </h5>
       <hr>
-      <a class ="btn btn-success" href="{% url 'consulta_add'  %}">Inserir</a>
+      <a class ="btn btn-success" href="{% url 'consulta_add'  %}">Adicionar</a>
       <table class = "table table-striped">
         <thead>
 

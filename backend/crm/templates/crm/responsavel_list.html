@@ -3,12 +3,10 @@
 {% block content %}
   <div class = "card">
     <div class="card-body">
-      <h4> Olá Família <B><label>{{ request.session.familia }} - {{request.session.familia_id}}</label></B></h4>
+      <h4> <B><label>{{ user.get_full_name }} -  Familia {{ familia}}</label></B></h4>
       <h5>
         Lista Responsáveis
-        <a
-          class ="btn btn-success"
-          href="{% url 'responsavel_add' %}"
+        <a class ="btn btn-success" href="{% url 'responsavel_add' %}"
         >Adicionar</a>
       </h5>
       <form action="." method="POST">
@@ -37,7 +35,7 @@
                 <td>{{ object.data_nascimento|date:"d/m/Y"|default:"---" }} </td>
                 <td>{{ object.cidade|default:"---" }} </td>
                 <td>{{ object.celular_whatsapp|default:"---" }} </td>
-                <td>{{ object.get_parentesco_do_object_display|default:"---" }} </td>
+                <td>{{ object.get_parentesco_do_responsavel_display|default:"---" }} </td>
                 <td>
                   <a class ="btn btn-warning btn-sm" href="{% url 'responsavel_edit' object.id %}">Editar</a>
                   <span

@@ -30,6 +30,18 @@ class DependenteListView(LRM, ListView):
         queryset = Dependente.objects.filter(familia__nome=familia, active=True)  # noqa E501
         return queryset
 
+    def get_context_data(self, **kwargs):
+        '''
+        Verifica se já existe uma família.
+        '''
+        context = super().get_context_data(**kwargs)
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        if familia:
+            context['minha_familia'] = True
+        else:
+            context['minha_familia'] = False
+        return context
 
 class DependenteDetailView(LRM, DetailView):
     model = Dependente

@@ -4,7 +4,7 @@
 {% block content %}
   <div class="card">
     <div class="card-body">
-      <h4> Olá Família <b><label>{{ request.session.familia }} - {{request.session.familia_id }}</label></b></h4>
+      <h4> <B><label>{{ user.get_full_name }} -  Familia {{ familia}}</label></B></h4>
       <hr>
       <a href="{% url 'responsavel_list' %}" class ="btn btn-warning">Voltar</a>
       <hr>

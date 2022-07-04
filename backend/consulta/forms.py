@@ -12,7 +12,7 @@ class ConsultaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['data_consulta'].widget.attrs.update({'class': 'mask-date'})   # noqa E501
-
+        self.fields['hora'].widget.attrs.update({'class': 'mask-hora'})
 
 class PosConsultaForm(forms.ModelForm):
 

@@ -4,7 +4,6 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from .forms import ConsultaForm, MedicamentoForm, PosConsultaForm
 from .models import Consulta, Medicamento, PosConsulta
 
-
 class ConsultaListView(LRM, ListView):
     model = Consulta
 

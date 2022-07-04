@@ -33,6 +33,9 @@ class CustomLoginView(LoginView):
         # Redireciona o Responsável Principal para completar o cadastro dele.
         if has_group(user, 'responsavel_principal'):
             responsavel = Responsavel.objects.get(user=user)
-            return resolve_url('responsavel_edit', pk=responsavel.pk)
+            if responsavel.parentesco_do_responsavel:
+                return resolve_url(settings.LOGIN_REDIRECT_URL)
+            else:
+                return resolve_url('responsavel_edit', pk=responsavel.pk)
         else:
             return resolve_url(settings.LOGIN_REDIRECT_URL)

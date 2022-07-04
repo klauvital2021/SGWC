@@ -94,10 +94,7 @@ class Medicamento(models.Model):
         Dependente,
         on_delete=models.CASCADE
     )
-    pos_consulta = models.ForeignKey(
-        PosConsulta,
-        on_delete=models.CASCADE
-    )
+
 
     class Meta:
         ordering = ('medicamento_prescrito',)

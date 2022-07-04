@@ -40,21 +40,17 @@ class Consulta(models.Model):
         ordering = ('data_consulta', 'hora')
 
     def __str__(self):
-        return f'{self.pk} - {self.dependente} - {self.data_consulta} - {self.hora} - {self.nome_especialista} - {self.especialidade}'
+        return f'{self.pk} - {self.dependente} - {self.data_consulta} - {self.hora} - {self.nome_especialista} - {self.especialidade}'  # noqa E501
 
     def get_absolute_url(self):
         return reverse("consulta_detail", kwargs={"pk": self.id})
 
 
 class PosConsulta(models.Model):
-    dependente = models.ForeignKey(
-        Dependente,
-        on_delete=models.CASCADE,
-        related_name='pos_consultas'
-    )
     consulta = models.ForeignKey(
         Consulta,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='pos_consultas'
     )
     acompanhante_responsavel = models.ForeignKey(
         Responsavel,
@@ -64,10 +60,10 @@ class PosConsulta(models.Model):
     diagnostico = models.TextField('Diagnóstico', blank=False, null=False)  # noqa E501
     tratamento = models.TextField('Tratamento', blank=True, null=True)  # noqa E501
     receita = models.ImageField('Upload Receita', upload_to='', blank=True, null=True)  # noqa E501
-    observacao = models.TextField('Tratamento', blank=True, null=True)  # noqa E501
+    observacao = models.TextField('Observação', blank=True, null=True)  # noqa E501
 
     def __str__(self):
-        return f'{self.pk} - {self.dependente}'
+        return f'{self.pk} - {self.consulta.dependente}'
 
     def get_upload_to(instance, filename):
         return instance.get_upload_to(filename)

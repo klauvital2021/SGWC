@@ -64,20 +64,17 @@
 
             <tr>
               <td>Motivo do Cancelamento</td>
-              <td>object.motivo_cancelamento</td>
+              <td>{{ object.motivo_cancelamento|default:"---" }}</td>
             </tr>
             <tr>
               <td>Observação</td>
-              <td>{{ object.observação|default:"---" }}</td>
+              <td>{{ object.observacao|default:"---" }}</td>
             </tr>
-
-
 
           </tbody>
         </table>
       </div>
     </div>
-    <a class ="btn btn-success" href="{% url 'consulta_list' %}" >Voltar</a>
     <a class ="btn btn-success" href="{% url 'consulta_list' %}" >Voltar</a>
   </div>
 {% endblock content %}

@@ -1,7 +1,5 @@
 from backend.crm.models import Usuario
 
-from .models import Usuario
-
 
 def retorno_familia(request):
     if request.user.is_authenticated:

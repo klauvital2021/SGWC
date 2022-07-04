@@ -1,5 +1,7 @@
 from django import forms
 
+from backend.crm.models import Responsavel, Usuario
+
 from .models import Consulta, Medicamento, PosConsulta
 
 
@@ -20,6 +22,14 @@ class PosConsultaForm(forms.ModelForm):
     class Meta:
         model = PosConsulta
         fields = '__all__'
+
+    def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        usuario = Usuario.objects.filter(user=user).first()
+        familia = usuario.familia
+        queryset = Responsavel.objects.filter(familia=familia)
+        self.fields['acompanhante_responsavel'].queryset = queryset
 
 
 class MedicamentoForm(forms.ModelForm):

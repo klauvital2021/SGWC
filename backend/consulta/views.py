@@ -62,6 +62,11 @@ class PosConsultaCreateView(LRM, CreateView):
     model = PosConsulta
     form_class = PosConsultaForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
 
 class PosConsultaUpdateView(LRM, UpdateView):
     model = PosConsulta

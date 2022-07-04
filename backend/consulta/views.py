@@ -15,7 +15,7 @@ class ConsultaDetailView(LRM, DetailView):
 class ConsultaCreateView(LRM, CreateView):
     model = Consulta
     form_class = ConsultaForm
-
+'''
     def form_valid(self, form):
         # Cria o User.
         user = user_create(form)
@@ -35,7 +35,7 @@ class ConsultaCreateView(LRM, CreateView):
         self.object.save()
 
         return super().form_valid(form)
-
+'''
 
 class ConsultaUpdateView(LRM, UpdateView):
     model = Consulta

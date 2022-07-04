@@ -14,7 +14,7 @@
         <thead>
 
           <tr>
-            <th>ID</th>
+
             <th>Data </th>
             <th>Hora</th>
             <th>Local</th>
@@ -25,28 +25,30 @@
             <th>Motivo Consulta</th>
             <th>Acompanhante</th>
             <th>Cancelamento</th>
-            <th>Acões</th>
+            <th>Editar/Deletar</th>
+            <th>Pós Consulta</th>
           </tr>
         </thead>
         <tbody>
           {%  for object in object_list %}
 
             <tr>
-              <td>{{ object.id }} </td>
-              <td>{{ object.data_consulta }} </td>
+              <td><a href="{{ object.get_absolute_url }}">{{ object.data_consulta }}</a></td>
+
               <td>{{ object.hora }}</td>
               <td>{{ object.local }} </td>
-              <td>{{ object.especialidade}} </td>
+              <td>{{ object.get_especialidade_display}} </td>
+              <td>{{ object.nome_especialista}} </td>
               <td>{{ object.fone_contato }} </td>
-              <td>{{ object.atendimento }} </td>
+              <td>{{ object.get_atendimento_display }} </td>
               <td>{{ object.motivo_consulta}} </td>
-              <td>{{ object.acompanhante_resp }} </td>
+              <td>{{ object.acompanhante_responsavel }} </td>
               <td>{{ object.cancelamento }} </td>
               <td>
                 <a class ="btn btn-warning btn-sm" href="">Editar</a>
                 <a class ="btn btn-danger btn-sm" href="" onclick="return confirm ('Tem certeza que deseja excluir o imovel de id: {{ object.id }} ?  ')">Excluir</a>
-                <a class="breadcrumb blue" href="{% url 'posconsulta_list'  %}">Pós Consulta</a>
               </td>
+              <td><a class="btn btn-success btn-sm" href="{% url 'posconsulta_add' %}">Pós Consulta</a></td>
             </tr>
           {% endfor %}
         </tbody>

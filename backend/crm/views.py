@@ -147,16 +147,18 @@ def familia_delete(request, pk):
     obj.save()
     return redirect('familia_list')
 
-
+# crm/views.py
 class ResponsavelListView(LRM, ListView):
     model = Responsavel
 
     def get_queryset(self):
         usuario = self.request.user.usuarios.first()
-        familia = usuario.familia
-        queryset = Responsavel.objects.filter(familia__nome=familia, active=True)  # noqa E501
+        if usuario:
+            familia = usuario.familia
+            queryset = Responsavel.objects.filter(familia__nome=familia, active=True)  # noqa E501
+        else:
+            queryset = Responsavel.objects.filter(active=True)
         return queryset
-
 
 class ResponsavelDetailView(LRM, DetailView):
     model = Responsavel
@@ -204,7 +206,9 @@ class CuidadorListView(LRM, ListView):
     model = Cuidador
 
     def get_queryset(self):
-        queryset = Cuidador.objects.filter(active=True)
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        queryset = Cuidador.objects.filter(familia__nome=familia, active=True)  # noqa E501
         return queryset
 
 

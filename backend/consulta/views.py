@@ -16,6 +16,26 @@ class ConsultaCreateView(LRM, CreateView):
     model = Consulta
     form_class = ConsultaForm
 
+    def form_valid(self, form):
+        # Cria o User.
+        user = user_create(form)
+
+        self.object = form.save(commit=False)
+
+        # Associa o User ao Dependente
+        self.object.user = user
+
+        # Adiciona o Dependente ao grupo 'dependente'.
+        add_to_group_consulta(form, user)
+
+        # Associa a Familia.
+        usuario = self.request.user.usuarios.first()
+        familia = usuario.familia
+        self.object.familia = familia
+        self.object.save()
+
+        return super().form_valid(form)
+
 
 class ConsultaUpdateView(LRM, UpdateView):
     model = Consulta
@@ -28,6 +48,7 @@ def consulta_delete(request):
 
 class PosConsultaListView(LRM, ListView):
     model = PosConsulta
+
 
 
 class PosConsultaDetailView(LRM, DetailView):

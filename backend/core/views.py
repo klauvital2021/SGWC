@@ -1,9 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
-from backend.crm.models import Usuario
-
-
 from backend.crm.models import Usuario
 
 
@@ -11,5 +7,9 @@ from backend.crm.models import Usuario
 def home(request):
     user = request.user
     usuario = Usuario.objects.filter(user=user).first()
-    context = {'familia': usuario.familia}
+    if usuario:
+        context = {'familia': usuario.familia}
+    else:
+        context = {}
     return render(request, 'home.html', context)
+

@@ -91,7 +91,6 @@ class Medicamento(models.Model):
         on_delete=models.CASCADE
     )
 
-
     class Meta:
         ordering = ('medicamento_prescrito',)
 
